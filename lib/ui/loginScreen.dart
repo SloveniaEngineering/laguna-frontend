@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:laguna/ui/widgets/credentialTextField.dart';
 
@@ -24,6 +23,8 @@ class _LoginScreenState extends State<LoginScreen> {
       builder: (BuildContext context, BoxConstraints constraints) {
         double screenWidth = constraints.maxWidth;
         double screenHeight = constraints.maxHeight;
+        bool isWideScreen = screenWidth > 700;
+
         return Stack(
           children: [
             Form(
@@ -31,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Align(
                 alignment: Alignment.center,
                 child: Container(
-                  decoration: kIsWeb
+                  decoration: isWideScreen
                       ? BoxDecoration(
                           shape: BoxShape.rectangle,
                           borderRadius: BorderRadius.circular(10),
@@ -54,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ])
                       : null,
                   child: SizedBox(
-                    width: kIsWeb ? screenWidth * 0.3 : screenWidth * 0.9,
+                    width: isWideScreen ? screenWidth * 0.3 : screenWidth * 0.9,
                     height: screenHeight * 0.6,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -67,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             alignment: Alignment.center,
                             child: Container(
                               alignment: Alignment.center,
-                              width: kIsWeb ? screenWidth * 0.25 : null,
+                              width: isWideScreen ? screenWidth * 0.25 : null,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.center,
