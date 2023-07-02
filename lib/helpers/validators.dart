@@ -22,7 +22,8 @@ class Validators {
 
   static String? requiredPasswordValidationHelper(String? input) {
     const nullInputText = "Geslo je obvezen podatek.";
-    const lengthInputText = "Geslo mora vsebovati vsaj ${Constants.minPasswordLength} znakov.";
+    const lengthInputText =
+        "Geslo mora vsebovati vsaj ${Constants.minPasswordLength} znakov.";
     const requirementText =
         "Geslo mora vsebovati vsaj eno veliko črko, eno malo črko, eno številko in en poseben znak.";
 
@@ -32,7 +33,8 @@ class Validators {
       bool hasUppercase = input.contains(RegExp(r'[A-Z]'));
       bool hasDigits = input.contains(RegExp(r'[0-9]'));
       bool hasLowercase = input.contains(RegExp(r'[a-z]'));
-      bool hasSpecialCharacters = input.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
+      bool hasSpecialCharacters =
+          input.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
       bool hasMinLength = input.length >= Constants.minPasswordLength;
 
       List<bool> conditionsList = [];

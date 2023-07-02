@@ -7,7 +7,6 @@ class CredentialTextField extends StatefulWidget {
   final bool allowObscureChange;
   final bool isPasswordVisible;
   final TextEditingController controller;
-
   final Function()? onVisibilityTap;
   final Function(String)? onChanged;
   final bool enableValidator;
@@ -40,51 +39,43 @@ class _CredentialTextFieldState extends State<CredentialTextField> {
 
     String? Function(String? input)? validatorFunction;
     if (widget.enableValidator) {
-      if (widget.isPassword) validatorFunction = Validators.requiredPasswordValidationHelper;
-      if (widget.isPassword == false) validatorFunction = Validators.requiredEmailValidationHelper;
+      if (widget.isPassword) {
+        validatorFunction = Validators.requiredPasswordValidationHelper;
+      }
+      if (widget.isPassword == false) {
+        validatorFunction = Validators.requiredEmailValidationHelper;
+      }
     }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(widget.mainText, style: const TextStyle(color: Colors.black)),
-        Stack(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(top: 4),
-              padding: const EdgeInsets.only(left: 8, right: 8),
-              decoration: BoxDecoration(color: Colors.black.withOpacity(0.08), borderRadius: BorderRadius.circular(8)),
-              child: TextFormField(
-                  keyboardType: widget.isPassword ? TextInputType.visiblePassword : TextInputType.emailAddress,
-                  obscureText: widget.allowObscureChange && !widget.isPasswordVisible,
-                  autofillHints: widget.isPassword ? <String>[AutofillHints.password] : <String>[AutofillHints.email],
-                  autofocus: false,
-                  autocorrect: false,
-                  onChanged: widget.onChanged,
-                  controller: widget.controller,
-                  cursorColor: Colors.black,
-                  style: const TextStyle(color: Colors.black),
-                  cursorRadius: const Radius.circular(8),
-                  decoration: const InputDecoration(
-                      border: InputBorder.none, errorStyle: TextStyle(fontWeight: FontWeight.bold), errorMaxLines: 3),
-                  validator: validatorFunction),
-            ),
-            widget.onVisibilityTap != null && widget.allowObscureChange
-                ? Positioned(
-                    top: 16.0,
-                    right: 16.0,
-                    child: GestureDetector(
-                      onTap: widget.onVisibilityTap,
-                      child: Container(
-                        color: Colors.transparent,
-                        child: Icon(icon, color: Colors.black),
-                      ),
-                    ),
-                  )
-                : const SizedBox(),
-          ],
-        )
-      ],
+    return Container(
+      margin: const EdgeInsets.only(top: 4),
+      padding: const EdgeInsets.only(left: 8, right: 8),
+      child: TextFormField(
+          keyboardType: widget.isPassword ? TextInputType.visiblePassword : TextInputType.emailAddress,
+          obscureText: widget.allowObscureChange && !widget.isPasswordVisible,
+          autofillHints: widget.isPassword ? <String>[AutofillHints.password] : <String>[AutofillHints.email],
+          autofocus: false,
+          autocorrect: false,
+          onChanged: widget.onChanged,
+          controller: widget.controller,
+          cursorColor: Colors.black,
+          style: const TextStyle(color: Colors.black),
+          decoration: InputDecoration(
+              fillColor: Colors.black,
+              labelText: widget.mainText,
+              border: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey),
+              ),
+              enabledBorder: const OutlineInputBorder(),
+              suffixIcon: widget.onVisibilityTap != null && widget.allowObscureChange
+                  ? IconButton(
+                      onPressed: widget.onVisibilityTap,
+                      icon: Icon(icon),
+                    )
+                  : null,
+              errorStyle: const TextStyle(fontWeight: FontWeight.bold),
+              errorMaxLines: 3),
+          validator: validatorFunction),
     );
   }
 }
