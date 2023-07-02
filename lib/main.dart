@@ -17,6 +17,14 @@ class MyApp extends StatelessWidget {
         path: Constants.loginRoute,
         builder: (context, state) => const LoginScreen(),
       ),
+      GoRoute(
+        path: Constants.registerRoute,
+        builder: (context, state) => const LoginScreen(), //Change this to RegisterScreen() when implemented
+      ),
+      GoRoute(
+        path: Constants.forgotPasswordRoute,
+        builder: (context, state) => const LoginScreen(), //Change this to ForgottenPassScreen() when implemented
+      ),
     ],
   );
 
