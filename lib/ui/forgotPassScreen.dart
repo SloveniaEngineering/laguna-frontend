@@ -92,6 +92,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                               'Email za ponastavitev gesla je bil poslan.'),
                                         ),
                                       );
+
+                                      // Clear the email field
+                                      emailController.clear();
                                     }
                                   },
                                   child: const Text('Pošlji email'),
