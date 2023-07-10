@@ -51,7 +51,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         CredentialTextField(
-                            mainText: "Email", isPassword: false, controller: emailController, enableValidator: true),
+                            mainText: "Email ali uporabniško ime",
+                            isPassword: false,
+                            controller: emailController,
+                            enableValidator: false),
                         const SizedBox(height: 10),
                         CredentialTextField(
                             mainText: "Geslo",
@@ -100,6 +103,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           child: ElevatedButton(
                             onPressed: () {
                               if (formKey.currentState!.validate()) {
+                                print("CALLING LOGIN ENDPOINT");
                                 ref.read(loginProvider.call(emailController.text, passController.text));
                               }
                             },
