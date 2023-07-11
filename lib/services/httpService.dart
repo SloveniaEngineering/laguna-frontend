@@ -29,7 +29,7 @@ class HttpService {
   }
 
   static Map<String, String> generateHeaders() {
-    return {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'};
+    return {'Content-Type': 'application/json', 'Accept': 'application/json'};
   }
 }
 
