@@ -33,7 +33,7 @@ To run backend server, execute `scripts/dev.sh` script from laguna-backend repos
 
 ### Web App
 
-# Running the Web app
+#### Running the Web app
 Because of current CORS issues on backend, you have to run web app with `--web-port 4200` parameter. (same as
 `FRONTEND_PORT` in `scripts/dev.sh`) so that FE gets whitelisted as origin by CORS.
 
@@ -43,7 +43,7 @@ flutter run -d chrome --web-port 4200 --release //Run release build of web app
 ```
 Possible workarounds for running the web app: `--web-browser-flag "--disable-web-security"`. (**DO NOT USE IN
 PRODUCTION**).
-## Building an Web app
+#### Building an Web app
 ```sh
 flutter build web
 flutter build web --release //Build web app for production
