@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:http/http.dart';
-import 'package:laguna/services/storageService.dart';
+import 'package:laguna/services/authService.dart';
 
 /// A service class for making HTTP requests.
 class HttpService {
@@ -48,7 +48,7 @@ class HttpService {
     String? accessToken = response.headers["x-access-token"];
     String? refreshToken = response.headers["x-refresh-token"];
     if (accessToken != null && refreshToken != null) {
-      StorageService().saveTokens(accessToken: accessToken, refreshToken: refreshToken);
+      AuthService().saveTokensToStorage(accessToken: accessToken, refreshToken: refreshToken);
     }
   }
 

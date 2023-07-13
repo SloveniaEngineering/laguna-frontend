@@ -1,5 +1,4 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:laguna/constants.dart';
 
 /// A service class for storing and retrieving data securely.
 class StorageService {
@@ -7,12 +6,6 @@ class StorageService {
     aOptions: AndroidOptions(encryptedSharedPreferences: true),
     iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
   );
-
-  /// Saves the access token and refresh token to storage.
-  void saveTokens({required String accessToken, required String refreshToken}) {
-    writeValueToStorage(key: Constants.accessTokenKey, value: accessToken);
-    writeValueToStorage(key: Constants.refreshTokenKey, value: refreshToken);
-  }
 
   /// Reads a string value from storage based on the specified [key].
   ///

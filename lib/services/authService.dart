@@ -5,8 +5,9 @@ import 'package:laguna/services/storageService.dart';
 /// A class that provides authentication-related functionality.
 class AuthService {
   /// Saves the access token and refresh token to storage.
-  Future<void> saveTokensToStorage(String accessToken, String refreshToken) async {
-    StorageService().saveTokens(accessToken: accessToken, refreshToken: refreshToken);
+  Future<void> saveTokensToStorage({required String accessToken, required String refreshToken}) async {
+    StorageService().writeValueToStorage(key: Constants.accessTokenKey, value: accessToken);
+    StorageService().writeValueToStorage(key: Constants.refreshTokenKey, value: refreshToken);
   }
 
   /// Retrieves the access token from storage.
