@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:laguna/helpers/validators.dart';
 import 'package:laguna/ui/widgets/credentialTextField.dart';
 import 'package:laguna/ui/widgets/landingBox.dart';
 
@@ -13,6 +14,7 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
   TextEditingController passController = TextEditingController();
   TextEditingController confirmPassController = TextEditingController();
   bool isPasswordVisible = false;
@@ -55,13 +57,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             mainText: "Email",
                             isPassword: false,
                             controller: emailController,
+                            validatorFunction: Validators.requiredEmailValidationHelper,
                             enableValidator: true,
                           ),
+                          const SizedBox(height: 10),
+                          CredentialTextField(
+                              mainText: "Username",
+                              isPassword: false,
+                              controller: usernameController,
+                              validatorFunction: Validators.requiredUsernameValidationHelper,
+                              enableValidator: true),
                           const SizedBox(height: 10),
                           CredentialTextField(
                             mainText: "Geslo",
                             isPassword: true,
                             controller: passController,
+                            validatorFunction: Validators.requiredPasswordValidationHelper,
                             allowObscureChange: true,
                             isPasswordVisible: isPasswordVisible,
                             onVisibilityTap: () {
@@ -76,12 +87,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             mainText: "Potrdi geslo",
                             isPassword: true,
                             controller: confirmPassController,
+                            validatorFunction: Validators.requiredPasswordValidationHelper,
                             enableValidator: true,
                             allowObscureChange: true,
                             isPasswordVisible: isConfirmPasswordVisible,
                             onVisibilityTap: () {
                               setState(() {
-                                isConfirmPasswordVisible = !isConfirmPasswordVisible;
+                                isConfirmPasswordVisible =
+                                    !isConfirmPasswordVisible;
                               });
                             },
                           ),
@@ -91,7 +104,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             child: ElevatedButton(
                               onPressed: () {
                                 if (formKey.currentState!.validate()) {
-                                  if (passController.text == confirmPassController.text) {
+                                  if (passController.text ==
+                                      confirmPassController.text) {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
                                         content: Text('Registracija uspešna!'),
@@ -101,7 +115,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   } else {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
-                                        content: Text('Geslo in potrditev gesla se ne ujemata!'),
+                                        content: Text(
+                                            'Geslo in potrditev gesla se ne ujemata!'),
                                       ),
                                     );
                                   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:laguna/helpers/validators.dart';
 import 'package:laguna/ui/widgets/credentialTextField.dart';
 import 'package:laguna/ui/widgets/landingBox.dart';
 
@@ -50,6 +51,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           CredentialTextField(
                             mainText: "Email",
                             isPassword: false,
+                            validatorFunction: Validators.requiredEmailValidationHelper,
                             controller: emailController,
                             enableValidator: true,
                           ),
@@ -62,7 +64,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                   // TODO: Implement reset password logic
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
-                                      content: Text('Email za ponastavitev gesla je bil poslan.'),
+                                      content: Text(
+                                          'Email za ponastavitev gesla je bil poslan.'),
                                     ),
                                   );
 

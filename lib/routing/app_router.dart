@@ -1,11 +1,14 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:laguna/constants.dart';
-import 'package:laguna/ui/forgotPassScreen.dart';
-import 'package:laguna/ui/loginScreen.dart';
-import 'package:laguna/ui/registerScreen.dart';
+import 'package:laguna/ui/screens/forgotPassScreen/forgotPassScreen.dart';
+import 'package:laguna/ui/screens/loginScreen/loginScreen.dart';
+import 'package:laguna/ui/screens/registerScreen/registerScreen.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final routerProvider = Provider((ref) {
+part 'app_router.g.dart';
+
+@riverpod
+GoRouter router(RouterRef ref) {
   return GoRouter(
     initialLocation: Constants.loginRoute,
     routes: [
@@ -23,4 +26,4 @@ final routerProvider = Provider((ref) {
       ),
     ],
   );
-});
+}
