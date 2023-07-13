@@ -9,7 +9,6 @@ part 'loginState.g.dart';
 
 @riverpod
 Future<void> login(LoginRef ref, String username, String password) async {
-  print("login");
   late ResponseWrapper response;
   try {
     Map<String, String> body = {

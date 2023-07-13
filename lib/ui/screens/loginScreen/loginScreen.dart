@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:laguna/constants.dart';
+import 'package:laguna/helpers/validators.dart';
 import 'package:laguna/ui/screens/loginScreen/loginState.dart';
 import 'package:laguna/ui/widgets/credentialTextField.dart';
 import 'package:laguna/ui/widgets/landingBox.dart';
@@ -15,10 +16,11 @@ class LoginScreen extends ConsumerStatefulWidget {
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
   final formKey = GlobalKey<FormState>();
-  TextEditingController emailController = TextEditingController();
+  TextEditingController usernameOrEmailController = TextEditingController();
   TextEditingController passController = TextEditingController();
   bool isPasswordVisible = false;
   bool rememberMe = false;
+  String? Function(String?)? usernameOrEmailValidatorFunction;
 
   // #docregion Example
   @override
@@ -39,7 +41,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("Laguna Prijava", style: TextStyle(fontSize: 30, color: Colors.black)),
+                const Text("Laguna Prijava",
+                    style: TextStyle(fontSize: 30, color: Colors.black)),
                 const SizedBox(height: 35),
                 Align(
                   alignment: Alignment.center,
@@ -51,14 +54,26 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         CredentialTextField(
-                            mainText: "Email ali uporabniško ime",
+                            onChanged: (String text) {
+                              setState(() {
+                                usernameOrEmailValidatorFunction = text
+                                        .contains("@")
+                                    ? Validators.requiredEmailValidationHelper
+                                    : Validators
+                                        .requiredUsernameValidationHelper;
+                              });
+                            },
+                            mainText: "Uporabniško ime ali email",
                             isPassword: false,
-                            controller: emailController,
-                            enableValidator: false),
+                            controller: usernameOrEmailController,
+                            validatorFunction: usernameOrEmailValidatorFunction,
+                            enableValidator: true),
                         const SizedBox(height: 10),
                         CredentialTextField(
                             mainText: "Geslo",
                             isPassword: true,
+                            validatorFunction:
+                                Validators.requiredPasswordValidationHelper,
                             controller: passController,
                             allowObscureChange: true,
                             isPasswordVisible: isPasswordVisible,
@@ -92,7 +107,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             //Forgot password
                             TextButton(
                               onPressed: () {
-                                GoRouter.of(context).push(Constants.forgotPasswordRoute);
+                                GoRouter.of(context)
+                                    .push(Constants.forgotPasswordRoute);
                               },
                               child: const Text("Pozabljeno geslo?"),
                             ),
@@ -104,7 +120,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             onPressed: () {
                               if (formKey.currentState!.validate()) {
                                 print("CALLING LOGIN ENDPOINT");
-                                ref.read(loginProvider.call(emailController.text, passController.text));
+                                ref.read(loginProvider.call(
+                                    usernameOrEmailController.text,
+                                    passController.text));
                               }
                             },
                             child: const Text('Prijava'),
@@ -120,7 +138,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             ),
                             TextButton(
                               onPressed: () {
-                                GoRouter.of(context).push(Constants.registerRoute);
+                                GoRouter.of(context)
+                                    .push(Constants.registerRoute);
                               },
                               child: const Text("Registracija"),
                             ),

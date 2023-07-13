@@ -2,62 +2,80 @@ import 'package:laguna/constants.dart';
 
 class Validators {
   static String? requiredEmailValidationHelper(String? input) {
+    if (input == null || input.isEmpty) {
+      return "Email naslov je obvezen podatek.";
+    }
+
     // regex for email validation
     const emailRegex =
         r"[a-z0-9!#$%&‘*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&‘*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
-    const nullInputText = "Email naslov je obvezen podatek.";
-    const invalidRegexText = "Email naslov ni veljaven.";
-
-    if (input == null || input.isEmpty) {
-      return nullInputText;
-    }
 
     final result = RegExp(emailRegex).hasMatch(input.toLowerCase());
     if (!result) {
-      return invalidRegexText;
+      return "Email naslov ni veljaven.";
+    }
+
+    bool properLength = input.length >= Constants.minEmailLength &&
+        input.length <= Constants.maxEmailLength;
+    if (properLength == false) {
+      return "Email naslov mora vsebovati od ${Constants
+          .minEmailLength} do vključno ${Constants.maxEmailLength} znakov.";
+    }
+
+    return null;
+  }
+
+  static String? requiredUsernameValidationHelper(String? input) {
+    if (input == null || input.isEmpty) {
+      return "Uporabniško ime je obvezen podatek.";
+    }
+
+    bool properLength = input.length >= Constants.minUsernameLength &&
+        input.length <= Constants.maxUsernameLength;
+
+    if (properLength == false) {
+      return "Uporabniško ime mora vsebovati od ${Constants
+          .minUsernameLength} do vključno ${Constants
+          .maxUsernameLength} znakov.";
     }
 
     return null;
   }
 
   static String? requiredPasswordValidationHelper(String? input) {
-    const nullInputText = "Geslo je obvezen podatek.";
-    const lengthInputText =
-        "Geslo mora vsebovati vsaj ${Constants.minPasswordLength} znakov.";
-    const requirementText =
-        "Geslo mora vsebovati vsaj eno veliko črko, eno malo črko, eno številko in en poseben znak.";
-
     if (input == null || input.isEmpty) {
-      return nullInputText;
-    } else {
-      bool hasUppercase = input.contains(RegExp(r'[A-Z]'));
-      bool hasDigits = input.contains(RegExp(r'[0-9]'));
-      bool hasLowercase = input.contains(RegExp(r'[a-z]'));
-      bool hasSpecialCharacters =
-          input.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
-      bool hasMinLength = input.length >= Constants.minPasswordLength;
+      return "Geslo je obvezen podatek.";
+    }
 
-      List<bool> conditionsList = [];
-      conditionsList.add(hasUppercase);
-      conditionsList.add(hasDigits);
-      conditionsList.add(hasLowercase);
-      conditionsList.add(hasSpecialCharacters);
+    bool hasUppercase = input.contains(RegExp(r'[A-Z]'));
+    bool hasDigits = input.contains(RegExp(r'[0-9]'));
+    bool hasLowercase = input.contains(RegExp(r'[a-z]'));
+    bool hasSpecialCharacters =
+    input.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
+    bool properLength = input.length >= Constants.minPasswordLength &&
+        input.length <= Constants.maxPasswordLength;
 
-      int numOfConditionsApply = 0;
-      //Check if at least three of four conditions apply
-      for (int i = 0; i < conditionsList.length; i++) {
-        if (conditionsList[i]) {
-          numOfConditionsApply += 1;
-        }
-      }
+    List<bool> conditionsList = [];
+    conditionsList.add(hasUppercase);
+    conditionsList.add(hasDigits);
+    conditionsList.add(hasLowercase);
+    conditionsList.add(hasSpecialCharacters);
 
-      if (hasMinLength == false) {
-        return lengthInputText;
-      } else if (numOfConditionsApply < 3) {
-        return requirementText;
+    int numOfConditionsApply = 0;
+    //Check if at least three of four conditions apply
+    for (int i = 0; i < conditionsList.length; i++) {
+      if (conditionsList[i]) {
+        numOfConditionsApply += 1;
       }
     }
 
+    if (properLength == false) {
+      return "Geslo mora vsebovati od ${Constants
+          .minPasswordLength} do vključno ${Constants
+          .maxPasswordLength} znakov.";
+    } else if (numOfConditionsApply < 3) {
+      return "Geslo mora vsebovati vsaj eno veliko črko, eno malo črko, eno številko in en poseben znak.";
+    }
     return null;
   }
 }

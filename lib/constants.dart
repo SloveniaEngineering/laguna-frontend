@@ -6,7 +6,12 @@ class Constants {
   static const String forgotPasswordRoute = '/forgotPassword';
 
   // App settings
-  static const int minPasswordLength = 8;
+  static const int minPasswordLength = 6;
+  static const int maxPasswordLength = 30;
+  static const int minUsernameLength = 6;
+  static const int maxUsernameLength = 30;
+  static const int minEmailLength = 5;
+  static const int maxEmailLength = 50;
 
   // API settings
   static const String baseUrl = 'http://127.0.0.1:6969';
