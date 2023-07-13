@@ -22,7 +22,7 @@ To build or run the application, we must first prepare the project. We do this b
   cd laguna-frontend
   flutter clean
   flutter pub get
-  flutter packages pub run build_runner build --delete-conflicting-outputs
+  dart run build_runner build --delete-conflicting-outputs
   cd ios //required only for iOS/MacOS
   rm -rf Pods/ Podfile.lock //required only for iOS/MacOS
   pod install //required only for iOS/MacOS
@@ -34,15 +34,14 @@ To run backend server, execute `scripts/dev.sh` script from laguna-backend repos
 ### Web App
 
 #### Running the Web app
-Because of current CORS issues on backend, you have to run web app with `--web-port 4200` parameter. (same as
-`FRONTEND_PORT` in `scripts/dev.sh`) so that FE gets whitelisted as origin by CORS.
+Because of current CORS issues on backend, you have to run web app with `--web-browser-flag --disable-web-security` 
+parameter so that FE can send request to localhost without issues. Never use this flag in production!
 
 ```sh
-flutter run -d chrome --web-port 4200
-flutter run -d chrome --web-port 4200 --release //Run release build of web app
+flutter run -d chrome --web-browser-flag --disable-web-security
+flutter run -d chrome --web-browser-flag --disable-web-security --release //Run release build of web app
 ```
-Possible workarounds for running the web app: `--web-browser-flag "--disable-web-security"`. (**DO NOT USE IN
-PRODUCTION**).
+
 #### Building an Web app
 ```sh
 flutter build web

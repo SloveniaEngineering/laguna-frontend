@@ -17,4 +17,8 @@ class Constants {
   static const String baseUrl = 'http://127.0.0.1:6969';
   static const String loginEndpoint = '$baseUrl/api/user/auth/login';
   static const String registerEndpoint = '$baseUrl/api/user/auth/register';
+
+  // Storage keys
+  static const String accessTokenKey = 'access_token';
+  static const String refreshTokenKey = 'refresh_token';
 }
