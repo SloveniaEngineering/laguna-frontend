@@ -3,8 +3,12 @@ import 'dart:typed_data';
 import 'package:http/http.dart';
 import 'package:laguna/services/storageService.dart';
 
+/// A service class for making HTTP requests.
 class HttpService {
-  static Future<ResponseWrapper> getRequest({required String endpoint, String? token}) async {
+  /// Sends a GET request to the specified [endpoint].
+  ///
+  /// Returns a [Future] of [ResponseWrapper] containing the response data.
+  static Future<ResponseWrapper> getRequest({required String endpoint}) async {
     final Map<String, String> headers = generateHeaders(); // if headers parameter is null, generate default headers
     Response response = await get(
       Uri.parse(endpoint),
@@ -18,6 +22,13 @@ class HttpService {
     }
   }
 
+  /// Sends a POST request to the specified [endpoint].
+  ///
+  /// The request [body] can be of any type.
+  ///
+  /// Optionally, you can provide custom [headers].
+  ///
+  /// Returns a [Future] of [ResponseWrapper] containing the response data.
   static Future<ResponseWrapper> postRequest(
       {required String endpoint, dynamic body, Map<String, String>? headers}) async {
     headers ??= generateHeaders(); // if headers parameter is null, generate default headers
@@ -32,6 +43,7 @@ class HttpService {
     }
   }
 
+  /// Extracts access and refresh tokens from the [response] and saves them to storage.
   static void extractAndSaveTokensFromResponse(Response response) {
     String? accessToken = response.headers["x-access-token"];
     String? refreshToken = response.headers["x-refresh-token"];
@@ -40,15 +52,28 @@ class HttpService {
     }
   }
 
+  /// Generates default headers for HTTP requests.
+  ///
+  /// Returns a map of headers.
   static Map<String, String> generateHeaders() {
     return {'Content-Type': 'application/json', 'Accept': 'application/json'};
   }
 }
 
+/// A wrapper class for HTTP response data.
 class ResponseWrapper {
+  /// Indicates if the request was successful.
   final bool success;
+
+  /// The response body as a string.
   final String? responseBody;
+
+  /// The error message, if the request was not successful.
   final String? errorMessage;
+
+  /// The response body as a byte array.
   final Uint8List? bodyBytes;
+
+  /// Creates a new instance of [ResponseWrapper].
   ResponseWrapper({required this.success, this.responseBody, this.errorMessage, this.bodyBytes});
 }
