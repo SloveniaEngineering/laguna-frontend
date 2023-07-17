@@ -14,11 +14,16 @@ class HttpService {
       Uri.parse(endpoint),
       headers: headers,
     );
-    if (response.statusCode == 200) {
-      extractAndSaveTokensFromResponse(response);
-      return ResponseWrapper(success: true, responseBody: response.body, bodyBytes: response.bodyBytes);
+    extractAndSaveTokensFromResponse(response);
+    if (response.statusCode >= 200 && response.statusCode <= 208) {
+      return ResponseWrapper(
+          success: true, statusCode: response.statusCode, responseBody: response.body, bodyBytes: response.bodyBytes);
     } else {
-      return ResponseWrapper(success: false, errorMessage: response.reasonPhrase, responseBody: response.body);
+      return ResponseWrapper(
+          success: false,
+          statusCode: response.statusCode,
+          errorMessage: response.reasonPhrase,
+          responseBody: response.body);
     }
   }
 
@@ -34,12 +39,16 @@ class HttpService {
     headers ??= generateHeaders(); // if headers parameter is null, generate default headers
 
     Response response = await post(Uri.parse(endpoint), body: body, headers: headers);
-
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      extractAndSaveTokensFromResponse(response);
-      return ResponseWrapper(success: true, bodyBytes: response.bodyBytes, responseBody: response.body);
+    extractAndSaveTokensFromResponse(response);
+    if (response.statusCode >= 200 && response.statusCode <= 208) {
+      return ResponseWrapper(
+          success: true, statusCode: response.statusCode, bodyBytes: response.bodyBytes, responseBody: response.body);
     } else {
-      return ResponseWrapper(success: false, errorMessage: response.reasonPhrase, responseBody: response.body);
+      return ResponseWrapper(
+          success: false,
+          statusCode: response.statusCode,
+          errorMessage: response.reasonPhrase,
+          responseBody: response.body);
     }
   }
 
@@ -65,6 +74,9 @@ class ResponseWrapper {
   /// Indicates if the request was successful.
   final bool success;
 
+  /// The response status code.
+  final int statusCode;
+
   /// The response body as a string.
   final String? responseBody;
 
@@ -75,5 +87,6 @@ class ResponseWrapper {
   final Uint8List? bodyBytes;
 
   /// Creates a new instance of [ResponseWrapper].
-  ResponseWrapper({required this.success, this.responseBody, this.errorMessage, this.bodyBytes});
+  ResponseWrapper(
+      {required this.success, required this.statusCode, this.responseBody, this.errorMessage, this.bodyBytes});
 }

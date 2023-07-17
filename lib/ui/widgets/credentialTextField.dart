@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:laguna/helpers/validators.dart';
 
-// TODO(zigapovhe): Do we need this?
 class CredentialTextField extends StatefulWidget {
   final bool isPassword;
   final String mainText;
@@ -12,7 +10,6 @@ class CredentialTextField extends StatefulWidget {
   final String? Function(String?)? validatorFunction;
   final Function()? onVisibilityTap;
   final Function(String)? onChanged;
-  final bool enableValidator;
 
   const CredentialTextField({
     Key? key,
@@ -25,7 +22,6 @@ class CredentialTextField extends StatefulWidget {
     required this.controller,
     this.onVisibilityTap,
     this.onChanged,
-    required this.enableValidator,
   }) : super(key: key);
 
   @override
@@ -42,22 +38,13 @@ class _CredentialTextFieldState extends State<CredentialTextField> {
       icon = Icons.visibility_off;
     }
 
-    String? Function(String? input)? validatorFunction;
-    if (widget.enableValidator == false) {
-      validatorFunction = null;
-    }
-
     return Container(
       margin: const EdgeInsets.only(top: 4),
       padding: const EdgeInsets.only(left: 8, right: 8),
       child: TextFormField(
-        keyboardType: widget.isPassword
-            ? TextInputType.visiblePassword
-            : TextInputType.emailAddress,
+        keyboardType: widget.isPassword ? TextInputType.visiblePassword : TextInputType.emailAddress,
         obscureText: widget.allowObscureChange && !widget.isPasswordVisible,
-        autofillHints: widget.isPassword
-            ? <String>[AutofillHints.password]
-            : <String>[AutofillHints.email],
+        autofillHints: widget.isPassword ? <String>[AutofillHints.password] : <String>[AutofillHints.email],
         autofocus: false,
         autocorrect: false,
         onChanged: widget.onChanged,
@@ -71,13 +58,12 @@ class _CredentialTextFieldState extends State<CredentialTextField> {
               borderSide: BorderSide(color: Colors.grey),
             ),
             enabledBorder: const OutlineInputBorder(),
-            suffixIcon:
-                widget.onVisibilityTap != null && widget.allowObscureChange
-                    ? IconButton(
-                        onPressed: widget.onVisibilityTap,
-                        icon: Icon(icon),
-                      )
-                    : null,
+            suffixIcon: widget.onVisibilityTap != null && widget.allowObscureChange
+                ? IconButton(
+                    onPressed: widget.onVisibilityTap,
+                    icon: Icon(icon),
+                  )
+                : null,
             errorStyle: const TextStyle(fontWeight: FontWeight.bold),
             errorMaxLines: 3),
         validator: widget.validatorFunction,

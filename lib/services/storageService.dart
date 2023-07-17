@@ -1,4 +1,7 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'storageService.g.dart';
 
 /// A service class for storing and retrieving data securely.
 class StorageService {
@@ -46,3 +49,6 @@ class StorageService {
     await _storage.delete(key: key);
   }
 }
+
+@riverpod
+StorageService storageService(StorageServiceRef ref) => StorageService();
