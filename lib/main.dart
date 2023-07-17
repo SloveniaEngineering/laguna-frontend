@@ -6,7 +6,7 @@ import 'package:laguna/routing/router_listenable.dart';
 import 'package:laguna/routing/routes.dart';
 
 void main() {
-  //GoRouter.optionURLReflectsImperativeAPIs = true;
+  GoRouter.optionURLReflectsImperativeAPIs = true;
   runApp(
     // For widgets to be able to read providers, we need to wrap the entire
     // application in a "ProviderScope" widget.

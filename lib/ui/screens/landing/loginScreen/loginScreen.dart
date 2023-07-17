@@ -114,9 +114,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           child: ElevatedButton(
                             onPressed: () {
                               if (formKey.currentState!.validate()) {
-                                ref
-                                    .read(authControllerProvider.notifier)
-                                    .login(usernameOrEmailController.text, passController.text);
+                                ref.read(authControllerProvider.notifier).login(
+                                    context: context,
+                                    email: usernameOrEmailController.text,
+                                    password: passController.text);
                               }
                             },
                             child: const Text('Prijava'),

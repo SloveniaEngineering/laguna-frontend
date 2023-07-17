@@ -106,15 +106,13 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                               onPressed: () async {
                                 if (formKey.currentState!.validate()) {
                                   if (passController.text == confirmPassController.text) {
-                                    await ref
-                                        .read(authControllerProvider.notifier)
-                                        .register(emailController.text, usernameController.text, passController.text);
-                                    GoRouter.of(context).pop();
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text('Registracija uspešna!'),
-                                      ),
-                                    );
+                                    bool success = await ref.read(authControllerProvider.notifier).register(
+                                          context: context,
+                                          email: emailController.text,
+                                          username: usernameController.text,
+                                          password: passController.text,
+                                        );
+                                    if (success) GoRouter.of(context).pop();
                                   } else {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(

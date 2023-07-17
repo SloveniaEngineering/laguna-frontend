@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:laguna/constants.dart';
 import 'package:laguna/dto/userDto/userDto.dart';
 import 'package:laguna/services/controllerService.dart';
@@ -14,16 +15,52 @@ class AuthController extends _$AuthController {
     return _loginWithSavedCredentials();
   }
 
-  Future<void> register(String email, String username, String password) async {
-    state = await AsyncValue.guard<User?>(() async {
-      return Controller().register(email, username, password);
-    });
+  Future<bool> register(
+      {required BuildContext context,
+      required String email,
+      required String username,
+      required String password}) async {
+    int statusCode = await Controller().register(email, username, password);
+    String message;
+    switch (statusCode) {
+      case 200:
+        message = 'Registracija uspešna';
+        break;
+      case 208:
+        message = 'Račun s tem e-poštnim naslovom ali uporabniškim imenom že obstaja.';
+        break;
+      case 400:
+        message = 'Registracija neuspešna. Prosimo, poskusite znova.';
+        break;
+      default:
+        message = 'Registracija neuspešna. Prosimo, poskusite znova.';
+        break;
+    }
+
+    _showMessage(context, message);
+
+    return statusCode == 200;
   }
 
-  Future<void> login(String email, String password) async {
+  Future<void> login({required BuildContext context, required String email, required String password}) async {
+    int? statusCode;
     state = await AsyncValue.guard<User?>(() async {
-      return Controller().login(email, password);
+      User? user;
+      (user, statusCode) = await Controller().login(email, password);
+      return user;
     });
+
+    String? message;
+    switch (statusCode) {
+      case 200:
+        message = "Prijava uspešna";
+        break;
+      case 401:
+        message = 'Napačno uporabniško ime ali geslo';
+        break;
+    }
+
+    if (message != null) _showMessage(context, message);
   }
 
   Future<User?> _loginWithSavedCredentials() async {
@@ -34,10 +71,18 @@ class AuthController extends _$AuthController {
         await ref.read(storageServiceProvider).readStringValueFromStorage(key: Constants.passwordKey);
 
     if (username != null && password != null) {
-      return Controller().login(username, password);
+      //return Controller().login(username, password);
     }
     return null;
     throw const UnauthorizedException('Session expired');
+  }
+
+  void _showMessage(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
   }
 
   Future<void> logout() async {
