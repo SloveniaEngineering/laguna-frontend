@@ -60,15 +60,13 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                             isPassword: false,
                             controller: emailController,
                             validatorFunction: Validators.requiredEmailValidationHelper,
-                            enableValidator: true,
                           ),
                           const SizedBox(height: 10),
                           CredentialTextField(
                               mainText: "Username",
                               isPassword: false,
                               controller: usernameController,
-                              validatorFunction: Validators.requiredUsernameValidationHelper,
-                              enableValidator: true),
+                              validatorFunction: Validators.requiredUsernameValidationHelper),
                           const SizedBox(height: 10),
                           CredentialTextField(
                             mainText: "Geslo",
@@ -82,7 +80,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                                 isPasswordVisible = !isPasswordVisible;
                               });
                             },
-                            enableValidator: true,
                           ),
                           const SizedBox(height: 10),
                           CredentialTextField(
@@ -90,7 +87,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                             isPassword: true,
                             controller: confirmPassController,
                             validatorFunction: Validators.requiredPasswordValidationHelper,
-                            enableValidator: true,
                             allowObscureChange: true,
                             isPasswordVisible: isConfirmPasswordVisible,
                             onVisibilityTap: () {

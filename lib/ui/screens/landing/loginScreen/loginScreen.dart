@@ -63,8 +63,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             mainText: "Uporabniško ime ali email",
                             isPassword: false,
                             controller: usernameOrEmailController,
-                            validatorFunction: usernameOrEmailValidatorFunction,
-                            enableValidator: true),
+                            validatorFunction: usernameOrEmailValidatorFunction),
                         const SizedBox(height: 10),
                         CredentialTextField(
                             mainText: "Geslo",
@@ -77,8 +76,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               setState(() {
                                 isPasswordVisible = !isPasswordVisible;
                               });
-                            },
-                            enableValidator: true),
+                            }),
                         const SizedBox(height: 10),
                         //Check box for remember me
                         Row(

@@ -10,7 +10,6 @@ class CredentialTextField extends StatefulWidget {
   final String? Function(String?)? validatorFunction;
   final Function()? onVisibilityTap;
   final Function(String)? onChanged;
-  final bool enableValidator;
 
   const CredentialTextField({
     Key? key,
@@ -23,7 +22,6 @@ class CredentialTextField extends StatefulWidget {
     required this.controller,
     this.onVisibilityTap,
     this.onChanged,
-    required this.enableValidator,
   }) : super(key: key);
 
   @override
@@ -38,11 +36,6 @@ class _CredentialTextFieldState extends State<CredentialTextField> {
       icon = Icons.visibility;
     } else {
       icon = Icons.visibility_off;
-    }
-
-    String? Function(String? input)? validatorFunction;
-    if (widget.enableValidator == false) {
-      validatorFunction = null;
     }
 
     return Container(
