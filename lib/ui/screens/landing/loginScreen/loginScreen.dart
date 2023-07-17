@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:laguna/constants.dart';
 import 'package:laguna/helpers/validators.dart';
-import 'package:laguna/ui/screens/loginScreen/loginState.dart';
+import 'package:laguna/routing/routes.dart';
+import 'package:laguna/state/authController.dart';
 import 'package:laguna/ui/widgets/credentialTextField.dart';
 import 'package:laguna/ui/widgets/landingBox.dart';
 
@@ -41,8 +41,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("Laguna Prijava",
-                    style: TextStyle(fontSize: 30, color: Colors.black)),
+                const Text("Laguna Prijava", style: TextStyle(fontSize: 30, color: Colors.black)),
                 const SizedBox(height: 35),
                 Align(
                   alignment: Alignment.center,
@@ -56,11 +55,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         CredentialTextField(
                             onChanged: (String text) {
                               setState(() {
-                                usernameOrEmailValidatorFunction = text
-                                        .contains("@")
+                                usernameOrEmailValidatorFunction = text.contains("@")
                                     ? Validators.requiredEmailValidationHelper
-                                    : Validators
-                                        .requiredUsernameValidationHelper;
+                                    : Validators.requiredUsernameValidationHelper;
                               });
                             },
                             mainText: "Uporabniško ime ali email",
@@ -72,8 +69,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         CredentialTextField(
                             mainText: "Geslo",
                             isPassword: true,
-                            validatorFunction:
-                                Validators.requiredPasswordValidationHelper,
+                            validatorFunction: Validators.requiredPasswordValidationHelper,
                             controller: passController,
                             allowObscureChange: true,
                             isPasswordVisible: isPasswordVisible,
@@ -107,8 +103,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             //Forgot password
                             TextButton(
                               onPressed: () {
-                                GoRouter.of(context)
-                                    .push(Constants.forgotPasswordRoute);
+                                GoRouter.of(context).push(ForgotPasswordRoute.path);
                               },
                               child: const Text("Pozabljeno geslo?"),
                             ),
@@ -119,10 +114,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           child: ElevatedButton(
                             onPressed: () {
                               if (formKey.currentState!.validate()) {
-                                print("CALLING LOGIN ENDPOINT");
-                                ref.read(loginProvider.call(
-                                    usernameOrEmailController.text,
-                                    passController.text));
+                                ref
+                                    .read(authControllerProvider.notifier)
+                                    .login(usernameOrEmailController.text, passController.text);
                               }
                             },
                             child: const Text('Prijava'),
@@ -138,8 +132,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             ),
                             TextButton(
                               onPressed: () {
-                                GoRouter.of(context)
-                                    .push(Constants.registerRoute);
+                                GoRouter.of(context).push(RegisterRoute.path);
                               },
                               child: const Text("Registracija"),
                             ),

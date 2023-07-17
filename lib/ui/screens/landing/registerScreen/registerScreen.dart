@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:laguna/helpers/validators.dart';
-import 'package:laguna/ui/screens/registerScreen/registerState.dart';
+import 'package:laguna/state/authController.dart';
 import 'package:laguna/ui/widgets/credentialTextField.dart';
 import 'package:laguna/ui/widgets/landingBox.dart';
 
@@ -106,14 +106,15 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                               onPressed: () async {
                                 if (formKey.currentState!.validate()) {
                                   if (passController.text == confirmPassController.text) {
+                                    await ref
+                                        .read(authControllerProvider.notifier)
+                                        .register(emailController.text, usernameController.text, passController.text);
+                                    GoRouter.of(context).pop();
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
                                         content: Text('Registracija uspešna!'),
                                       ),
                                     );
-                                    ref.read(registerProvider.call(
-                                        emailController.text, usernameController.text, passController.text));
-                                    GoRouter.of(context).pop();
                                   } else {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(

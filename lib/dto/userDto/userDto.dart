@@ -6,7 +6,7 @@ part 'userDto.g.dart';
 @freezed
 class User with _$User {
   const factory User({
-    required int id,
+    required String id,
     required String username,
     required String? first_login,
     required String? last_login,
@@ -20,4 +20,14 @@ class User with _$User {
   }) = _User;
 
   factory User.fromJson(Map<String, Object?> json) => _$UserFromJson(json);
+}
+
+extension UserExtension on User? {
+  bool isLoggedOut() {
+    return this == null;
+  }
+
+  bool isLoggedIn() {
+    return this != null;
+  }
 }
