@@ -9,7 +9,7 @@ class AccountScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<User?> user = ref.watch(authControllerProvider);
-    return Column(children: [
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.start, children: [
       const Text('Account Screen'),
       const SizedBox(
         height: 20,

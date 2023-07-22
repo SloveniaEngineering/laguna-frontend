@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:laguna/routing/routes.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -16,16 +15,16 @@ class NavigationIndex extends _$NavigationIndex {
     state = index;
     switch (index) {
       case 0:
-        GoRouter.of(context).go(HomeRoute.path);
+        const HomeRoute().go(context);
         break;
       case 1:
-        //Navigator.of(context).pushNamed(SearchRoute.routeName);
+        //const SearchRoute().go(context);
         break;
       case 2:
-        //Navigator.of(context).pushNamed(ChatRoute.routeName);
+        //const ChatRoute().go(context);
         break;
       case 3:
-        GoRouter.of(context).go(AccountRoute.path);
+        const AccountRoute().go(context);
         break;
     }
   }
