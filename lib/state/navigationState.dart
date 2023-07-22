@@ -8,22 +8,36 @@ part 'navigationState.g.dart';
 class NavigationIndex extends _$NavigationIndex {
   @override
   int build() {
+    // The initial navigation index, defaults to 0.
     return 0;
   }
 
+  /// Navigates to the specified [index].
+  ///
+  /// The [context] is used to push the corresponding route.
+  ///
+  /// Available indexes and corresponding routes:
+  ///   - 0: HomeRoute
+  ///   - 1: SearchRoute (Not yet implemented)
+  ///   - 2: ChatRoute (Not yet implemented)
+  ///   - 3: AccountRoute
   void goToIndex({required BuildContext context, required int index}) {
     state = index;
     switch (index) {
       case 0:
+        // Navigates to the HomeRoute.
         const HomeRoute().go(context);
         break;
       case 1:
-        //const SearchRoute().go(context);
+        // Uncomment and specify the route when needed.
+        // const SearchRoute().go(context);
         break;
       case 2:
-        //const ChatRoute().go(context);
+        // Uncomment and specify the route when needed.
+        // const ChatRoute().go(context);
         break;
       case 3:
+        // Navigates to the AccountRoute.
         const AccountRoute().go(context);
         break;
     }

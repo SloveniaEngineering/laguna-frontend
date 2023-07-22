@@ -53,6 +53,8 @@ class HttpService {
   }
 
   /// Extracts access and refresh tokens from the [response] and saves them to storage.
+  ///
+  /// The [response] is expected to contain the access and refresh tokens in its headers.
   static void extractAndSaveTokensFromResponse(Response response) {
     String? accessToken = response.headers["x-access-token"];
     String? refreshToken = response.headers["x-refresh-token"];
