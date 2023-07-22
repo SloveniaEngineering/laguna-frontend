@@ -6,8 +6,11 @@ import 'package:laguna/services/storageService.dart';
 class AuthService {
   /// Saves the access token and refresh token to storage.
   Future<void> saveTokensToStorage({required String accessToken, required String refreshToken}) async {
-    StorageService().writeValueToStorage(key: Constants.accessTokenKey, value: accessToken);
-    StorageService().writeValueToStorage(key: Constants.refreshTokenKey, value: refreshToken);
+    print("Saving tokens to storage");
+    print("Access token: $accessToken");
+    print("Refresh token: $refreshToken");
+    StorageService().writeStringToStorage(key: Constants.accessTokenKey, value: accessToken);
+    StorageService().writeStringToStorage(key: Constants.refreshTokenKey, value: refreshToken);
   }
 
   /// Retrieves the access token from storage.
@@ -24,9 +27,7 @@ class AuthService {
   ///
   /// Returns `true` if the token is expired, otherwise `false`.
   bool isTokenExpired(String token) {
-    final Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
-    final int? expiration = decodedToken['exp'];
-    return expiration != null && DateTime.now().millisecondsSinceEpoch >= expiration * 1000;
+    return JwtDecoder.isExpired(token);
   }
 
   /// Checks if the user is logged in.

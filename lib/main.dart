@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:laguna/routing/router_listenable.dart';
 import 'package:laguna/routing/routes.dart';
+import 'package:laguna/services/storageService.dart';
 
 void main() {
   GoRouter.optionURLReflectsImperativeAPIs = true;
@@ -23,6 +24,7 @@ class MyApp extends HookConsumerWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.read(storageServiceProvider).initStorage();
     final notifier = ref.watch(routerListenableProvider.notifier);
 
     final key = useRef(GlobalKey<NavigatorState>(debugLabel: 'routerKey'));
