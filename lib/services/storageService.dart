@@ -5,6 +5,9 @@ part 'storageService.g.dart';
 
 /// A service class for storing and retrieving data securely.
 class StorageService {
+  /// Initializes the shared preferences storage.
+  ///
+  /// Returns a [Future] that resolves to a [SharedPreferences] instance.
   Future<SharedPreferences> initStorage() async {
     return await SharedPreferences.getInstance();
   }
@@ -39,7 +42,7 @@ class StorageService {
 
   /// Writes a value to storage with the specified [key].
   ///
-  /// The [value] must be String.
+  /// The [value] must be a [String].
   Future<void> writeStringToStorage({required key, required String value}) async {
     SharedPreferences storage = await initStorage();
     await storage.setString(key, value);
@@ -47,13 +50,15 @@ class StorageService {
 
   /// Writes a value to storage with the specified [key].
   ///
-  /// The [value] must be int.
+  /// The [value] must be an [int].
   Future<void> writeIntToStorage({required key, required int value}) async {
     SharedPreferences storage = await initStorage();
     await storage.setInt(key, value);
   }
 
   /// Deletes the stored data associated with the specified [key].
+  ///
+  /// Returns a [Future] that resolves when the data is successfully deleted.
   Future<void> deleteStorageByKey({required key}) async {
     SharedPreferences storage = await initStorage();
     await storage.remove(key);

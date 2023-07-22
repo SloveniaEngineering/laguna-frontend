@@ -18,15 +18,21 @@ void main() {
   );
 }
 
+/// The root widget of the Laguna application.
 class MyApp extends HookConsumerWidget {
+  /// Creates a [MyApp] widget.
   const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Initialize the storage service for reading/writing data securely.
     ref.read(storageServiceProvider).initStorage();
+
+    // Get the router notifier to listen for changes and refresh the router.
     final notifier = ref.watch(routerListenableProvider.notifier);
 
+    // Use Hook to get a memoized instance of the GoRouter with dependencies.
     final key = useRef(GlobalKey<NavigatorState>(debugLabel: 'routerKey'));
     final router = useMemoized(
       () => GoRouter(
@@ -39,6 +45,8 @@ class MyApp extends HookConsumerWidget {
       ),
       [notifier],
     );
+
+    // Use MaterialApp.router to set up the application with the GoRouter.
     return MaterialApp.router(
       title: 'Laguna',
       theme: ThemeData(

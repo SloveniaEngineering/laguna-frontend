@@ -11,6 +11,7 @@ import 'package:laguna/ui/widgets/lagunaSkeleton.dart';
 
 part 'routes.g.dart';
 
+/// TypedGoRoute for the Login screen.
 @TypedGoRoute<LoginRoute>(path: LoginRoute.path, name: LoginRoute.pageName)
 class LoginRoute extends GoRouteData {
   const LoginRoute();
@@ -23,6 +24,7 @@ class LoginRoute extends GoRouteData {
   }
 }
 
+/// TypedGoRoute for the Register screen.
 @TypedGoRoute<RegisterRoute>(path: RegisterRoute.path, name: RegisterRoute.pageName)
 class RegisterRoute extends GoRouteData {
   const RegisterRoute();
@@ -35,6 +37,7 @@ class RegisterRoute extends GoRouteData {
   }
 }
 
+/// TypedGoRoute for the Forgot Password screen.
 @TypedGoRoute<ForgotPasswordRoute>(path: ForgotPasswordRoute.path, name: ForgotPasswordRoute.pageName)
 class ForgotPasswordRoute extends GoRouteData {
   const ForgotPasswordRoute();
@@ -47,6 +50,7 @@ class ForgotPasswordRoute extends GoRouteData {
   }
 }
 
+/// TypedGoRoute for the Splash screen.
 @TypedGoRoute<SplashRoute>(path: SplashRoute.path, name: SplashRoute.pageName)
 class SplashRoute extends GoRouteData {
   const SplashRoute();
@@ -59,6 +63,7 @@ class SplashRoute extends GoRouteData {
   }
 }
 
+/// TypedShellRoute for the main shell route that holds Home and Account routes.
 @TypedShellRoute<MyShellRouteData>(
   routes: <TypedRoute<RouteData>>[
     TypedGoRoute<HomeRoute>(path: HomeRoute.path),
@@ -78,6 +83,7 @@ class MyShellRouteData extends ShellRouteData {
   }
 }
 
+/// TypedGoRoute for the Home screen.
 @TypedGoRoute<HomeRoute>(path: HomeRoute.path, name: HomeRoute.pageName)
 class HomeRoute extends GoRouteData {
   const HomeRoute();
@@ -90,6 +96,7 @@ class HomeRoute extends GoRouteData {
   }
 }
 
+/// TypedGoRoute for the Account screen.
 @TypedGoRoute<AccountRoute>(path: AccountRoute.path, name: AccountRoute.pageName)
 class AccountRoute extends GoRouteData {
   const AccountRoute();

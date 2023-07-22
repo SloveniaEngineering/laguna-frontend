@@ -14,9 +14,8 @@ part 'router_listenable.g.dart';
 /// An alternative would be to register a dependency via an Inherited Widget, but that's kinda a no-go for Riverpod.
 ///
 /// To sync Riverpod' state with this Listener, we simply accept and call a single callback on authentication change.
-/// Obviously, more logic could be implemented here, this is meant to be a simple example.
 ///
-/// I kinda like this example, as this allows to centralize global redirecting logic in one class.
+/// This allows us to centralize global redirecting logic in one class.
 ///
 /// SIDE NOTES.
 /// This might look overcomplicated at a first glance;
@@ -32,7 +31,7 @@ class RouterListenable extends _$RouterListenable implements Listenable {
   @override
   Future<void> build() async {
     // One could watch more providers and write logic accordingly
-
+    // Watches the authControllerProvider to determine if the user is authenticated
     _isAuth = await ref.watch(
       authControllerProvider.selectAsync(
         (User? data) {
@@ -41,6 +40,7 @@ class RouterListenable extends _$RouterListenable implements Listenable {
       ),
     );
 
+    // Listens to changes in the state and calls the routerListener when appropriate
     ref.listenSelf((_, __) {
       // One could write more conditional logic for when to call redirection
       if (state.isLoading) return;
@@ -49,6 +49,7 @@ class RouterListenable extends _$RouterListenable implements Listenable {
   }
 
   /// Redirects the user when our authentication changes
+  /// Determines the appropriate redirection based on authentication status and the current route
   String? redirect(BuildContext context, GoRouterState state) {
     if (this.state.isLoading || this.state.hasError) return null;
 

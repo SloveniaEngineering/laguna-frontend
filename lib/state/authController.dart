@@ -16,6 +16,9 @@ class AuthController extends _$AuthController {
     return _loginWithSavedTokens();
   }
 
+  /// Attempts to register a new user with the provided [email], [username], and [password].
+  ///
+  /// Returns a [Future] that resolves to `true` if the registration is successful, otherwise `false`.
   Future<bool> register(
       {required BuildContext context,
       required String email,
@@ -43,6 +46,11 @@ class AuthController extends _$AuthController {
     return statusCode == 200;
   }
 
+  /// Attempts to log in the user with the provided [email] and [password].
+  ///
+  /// Displays a snack bar with an error message if the login fails.
+  ///
+  /// Returns a [Future] that resolves to `void`.
   Future<void> login({required BuildContext context, required String email, required String password}) async {
     int? statusCode;
     AsyncValue<User?> value = await AsyncValue.guard<User?>(() async {
@@ -69,6 +77,9 @@ class AuthController extends _$AuthController {
     if (message != null) _showMessage(context, message);
   }
 
+  /// Attempts to log in the user with the saved access and refresh tokens.
+  ///
+  /// Returns a [Future] that resolves to the [User] if the login is successful, otherwise `null`.
   Future<User?> _loginWithSavedTokens() async {
     print("Test1");
     final String? accessToken =
@@ -88,6 +99,7 @@ class AuthController extends _$AuthController {
     }
   }
 
+  /// Displays a [SnackBar] with the provided [message].
   void _showMessage(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -96,6 +108,7 @@ class AuthController extends _$AuthController {
     );
   }
 
+  /// Logs out the user and clears the access and refresh tokens from storage.
   Future<void> logout() async {
     print('Logging out user');
     await ref.read(storageServiceProvider).deleteStorageByKey(key: Constants.accessTokenKey);
@@ -119,10 +132,10 @@ class AuthController extends _$AuthController {
     }
   }
 
-  /// Internal method used to listen authentication state changes.
+  /// Internal method used to listen to authentication state changes.
   /// When the auth object is in a loading state, nothing happens.
-  /// When the auth object is in a error state, we choose to remove the token
-  /// Otherwise, we expect the current auth value to be reflected in our persistence API
+  /// When the auth object is in an error state, the access and refresh tokens are removed from storage.
+  /// Otherwise, we expect the current auth value to be reflected in our persistence API.
   void _persistenceRefreshLogic() async {
     ref.listenSelf((_, next) async {
       if (next.isLoading) return;
