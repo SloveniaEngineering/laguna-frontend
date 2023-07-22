@@ -1,23 +1,23 @@
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'storageService.g.dart';
 
 /// A service class for storing and retrieving data securely.
 class StorageService {
-  final _storage = const FlutterSecureStorage(
-    aOptions: AndroidOptions(encryptedSharedPreferences: true),
-    iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
-  );
+  Future<SharedPreferences> initStorage() async {
+    return await SharedPreferences.getInstance();
+  }
 
   /// Reads a string value from storage based on the specified [key].
   ///
   /// Returns a [Future] that resolves to the value associated with the key, or `null` if not found.
   Future<String?> readStringValueFromStorage({required String key}) async {
+    SharedPreferences storage = await initStorage();
     try {
-      return await _storage.read(key: key);
+      return storage.getString(key);
     } catch (e) {
-      await _storage.delete(key: key);
+      storage.remove(key);
     }
     return null;
   }
@@ -27,26 +27,36 @@ class StorageService {
   /// An optional [defaultValue] can be provided to return a default value if the key is not found or if an error occurs.
   ///
   /// Returns a [Future] that resolves to the integer value associated with the key, or the default value.
-  Future<int> readIntValueFromStorage({required String key, int defaultValue = 0}) async {
+  Future<int?> readIntValueFromStorage({required String key, int defaultValue = 0}) async {
+    SharedPreferences storage = await initStorage();
     try {
-      String value = await _storage.read(key: key) ?? "$defaultValue";
-      return int.tryParse(value) ?? defaultValue;
+      return storage.getInt(key) ?? defaultValue;
     } catch (e) {
-      await _storage.delete(key: key);
+      storage.remove(key);
       return defaultValue;
     }
   }
 
   /// Writes a value to storage with the specified [key].
   ///
-  /// The [value] can be of any type.
-  Future<void> writeValueToStorage({required key, required dynamic value}) async {
-    await _storage.write(key: key, value: value.toString());
+  /// The [value] must be String.
+  Future<void> writeStringToStorage({required key, required String value}) async {
+    SharedPreferences storage = await initStorage();
+    await storage.setString(key, value);
+  }
+
+  /// Writes a value to storage with the specified [key].
+  ///
+  /// The [value] must be int.
+  Future<void> writeIntToStorage({required key, required int value}) async {
+    SharedPreferences storage = await initStorage();
+    await storage.setInt(key, value);
   }
 
   /// Deletes the stored data associated with the specified [key].
   Future<void> deleteStorageByKey({required key}) async {
-    await _storage.delete(key: key);
+    SharedPreferences storage = await initStorage();
+    await storage.remove(key);
   }
 }
 

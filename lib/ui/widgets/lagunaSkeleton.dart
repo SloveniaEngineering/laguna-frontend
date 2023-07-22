@@ -1,21 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:laguna/routing/routes.dart';
+import 'package:laguna/state/navigationState.dart';
 
-class LagunaSkeleton extends StatefulWidget {
-  final List<Widget> children;
-  const LagunaSkeleton({super.key, required this.children});
+class LagunaSkeleton extends ConsumerWidget {
+  const LagunaSkeleton({super.key, required this.child});
+  final Widget child;
 
   @override
-  State<LagunaSkeleton> createState() => _LagunaSkeletonState();
-}
-
-class _LagunaSkeletonState extends State<LagunaSkeleton> {
-  int _selectedTab = 0;
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return AdaptiveScaffold(
       // An option to override the default breakpoints used for small, medium,
       // and large.
@@ -23,32 +18,16 @@ class _LagunaSkeletonState extends State<LagunaSkeleton> {
       mediumBreakpoint: const WidthPlatformBreakpoint(begin: 700, end: 1000),
       largeBreakpoint: const WidthPlatformBreakpoint(begin: 1000),
       useDrawer: true,
-      selectedIndex: _selectedTab,
+      selectedIndex: ref.watch(navigationIndexProvider),
       onSelectedIndexChange: (int index) {
-        switch (index) {
-          case 0:
-            GoRouter.of(context).go(HomeRoute.path);
-            break;
-          case 1:
-            //Navigator.of(context).pushNamed(SearchRoute.routeName);
-            break;
-          case 2:
-            //Navigator.of(context).pushNamed(ChatRoute.routeName);
-            break;
-          case 3:
-            GoRouter.of(context).go(AccountRoute.path);
-            break;
-        }
-
-        setState(() {
-          _selectedTab = index;
-        });
+        ref.read(navigationIndexProvider.notifier).goToIndex(context: context, index: index);
       },
       destinations: const <NavigationDestination>[
         NavigationDestination(
           icon: Icon(Icons.home_outlined),
           selectedIcon: Icon(Icons.home),
           label: HomeRoute.pageName,
+          tooltip: HomeRoute.pageName,
         ),
         NavigationDestination(
           icon: Icon(Icons.search),
@@ -64,17 +43,26 @@ class _LagunaSkeletonState extends State<LagunaSkeleton> {
           icon: Icon(CupertinoIcons.person),
           selectedIcon: Icon(Icons.person),
           label: AccountRoute.pageName,
+          tooltip: AccountRoute.pageName,
         ),
       ],
-      body: (_) => GridView.count(crossAxisCount: 2, children: widget.children),
-      smallBody: (_) => ListView.builder(
-        itemCount: widget.children.length,
-        itemBuilder: (_, int idx) => widget.children[idx],
+      internalAnimations: false,
+      body: (_) => SafeArea(child: child),
+      smallBody: (_) => SafeArea(child: child),
+      leadingUnextendedNavRail: Container(
+        color: Colors.blueGrey,
+        width: 50,
+        height: 50,
+        child: const Text("Laguna"),
+      ),
+      // Define a default leading widget.
+      leadingExtendedNavRail: const SizedBox(
+        width: 50,
+        height: 50,
+        child: Icon(Icons.accessible_forward_rounded),
       ),
       // Define a default secondaryBody.
-      secondaryBody: (_) => Container(
-        color: const Color.fromARGB(255, 234, 158, 192),
-      ),
+      secondaryBody: AdaptiveScaffold.emptyBuilder,
       // Override the default secondaryBody during the smallBreakpoint to be
       // empty. Must use AdaptiveScaffold.emptyBuilder to ensure it is properly
       // overridden.

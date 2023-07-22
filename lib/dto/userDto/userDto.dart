@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:laguna/services/authService.dart';
 
 part 'userDto.freezed.dart';
 part 'userDto.g.dart';
@@ -23,11 +24,12 @@ class User with _$User {
 }
 
 extension UserExtension on User? {
-  bool isLoggedOut() {
-    return this == null;
+  Future<bool> isLoggedOut() async {
+    //Check if tokens in storage are null;
+    return await AuthService().isUserLoggedIn() == false;
   }
 
-  bool isLoggedIn() {
-    return this != null;
+  Future<bool> isLoggedIn() async {
+    return await AuthService().isUserLoggedIn();
   }
 }

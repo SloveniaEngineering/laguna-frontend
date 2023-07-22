@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:laguna/ui/screens/landing/forgotPassScreen/forgotPassScreen.dart';
@@ -6,6 +7,7 @@ import 'package:laguna/ui/screens/landing/registerScreen/registerScreen.dart';
 import 'package:laguna/ui/screens/main/accountScreen.dart';
 import 'package:laguna/ui/screens/main/homeScreen.dart';
 import 'package:laguna/ui/screens/splashScreen.dart';
+import 'package:laguna/ui/widgets/lagunaSkeleton.dart';
 
 part 'routes.g.dart';
 
@@ -54,6 +56,25 @@ class SplashRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const SplashScreen();
+  }
+}
+
+@TypedShellRoute<MyShellRouteData>(
+  routes: <TypedRoute<RouteData>>[
+    TypedGoRoute<HomeRoute>(path: HomeRoute.path),
+    TypedGoRoute<AccountRoute>(path: AccountRoute.path),
+  ],
+)
+class MyShellRouteData extends ShellRouteData {
+  const MyShellRouteData();
+
+  @override
+  Widget builder(
+    BuildContext context,
+    GoRouterState state,
+    Widget navigator,
+  ) {
+    return LagunaSkeleton(child: navigator);
   }
 }
 
