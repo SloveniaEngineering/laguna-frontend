@@ -8,7 +8,7 @@ import 'package:laguna/ui/widgets/credentialTextField.dart';
 import 'package:laguna/ui/widgets/landingBox.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
 
   @override
   ConsumerState<LoginScreen> createState() => _LoginScreenState();
