@@ -30,62 +30,28 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           double screenWidth = constraints.maxWidth;
           double screenHeight = constraints.maxHeight;
           bool isWideScreen = screenWidth > 700;
-        return Form(
-          key: formKey,
-          child: LandingBox(
-            screenWidth: screenWidth,
-            screenHeight: screenHeight,
-            isWideScreen: isWideScreen,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text("Laguna Prijava",
-                    style: TextStyle(fontSize: 30, color: Colors.black)),
-                const SizedBox(height: 35),
-                Align(
-                  alignment: Alignment.center,
-                  child: Container(
-                    alignment: Alignment.center,
-                    width: isWideScreen ? screenWidth * 0.25 : null,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        CredentialTextField(
-                            onChanged: (String text) {
-                              setState(() {
-                                usernameOrEmailValidatorFunction = text
-                                        .contains("@")
-                                    ? Validators.requiredEmailValidationHelper
-                                    : Validators
-                                        .requiredUsernameValidationHelper;
-                              });
-                            },
-                            mainText: "Uporabniško ime ali email",
-                            isPassword: false,
-                            controller: usernameOrEmailController,
-                            validatorFunction:
-                                usernameOrEmailValidatorFunction),
-                        const SizedBox(height: 10),
-                        CredentialTextField(
-                            mainText: "Geslo",
-                            isPassword: true,
-                            validatorFunction:
-                                Validators.requiredPasswordValidationHelper,
-                            controller: passController,
-                            allowObscureChange: true,
-                            isPasswordVisible: isPasswordVisible,
-                            onVisibilityTap: () {
-                              setState(() {
-                                isPasswordVisible = !isPasswordVisible;
-                              });
-                            }),
-                        const SizedBox(height: 10),
-                        //Check box for remember me
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          mainAxisSize: MainAxisSize.max,
+          return Form(
+            key: formKey,
+            child: LandingBox(
+              screenWidth: screenWidth,
+              screenHeight: screenHeight,
+              isWideScreen: isWideScreen,
+              child: AutofillGroup(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "Laguna Prijava",
+                      style: TextStyle(fontSize: 30, color: Colors.black),
+                    ),
+                    const SizedBox(height: 35),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: isWideScreen ? screenWidth * 0.25 : null,
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
@@ -148,16 +114,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 ),
                               ],
                             ),
-<<<<<<< HEAD
-
-                            //Forgot password
-                            TextButton(
-                              onPressed: () {
-                                GoRouter.of(context)
-                                    .push(ForgotPasswordRoute.path);
-                              },
-                              child: const Text("Pozabljeno geslo?"),
-=======
                             Container(
                               margin: const EdgeInsets.only(top: 20),
                               child: ElevatedButton(
@@ -191,7 +147,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                   child: const Text("Registracija"),
                                 ),
                               ],
->>>>>>> 6a34d59efc0176699cd894387789790cff5cc29e
                             ),
                           ],
                         ),
