@@ -28,7 +28,7 @@ To build or run the application, we must first prepare the project. We do this b
   pod install //required only for iOS/MacOS
   ```
 
-If you want to run backend server locally, clone [laguna-backend][laguna-backend] repository and follow instructions in README.md file.
+If you want to run backend server locally, clone [laguna-backend](https://github.com/SloveniaEngineering/laguna-backend) repository and follow instructions in README.md file.
 To run backend server, execute `scripts/dev.sh` script from laguna-backend repository.
 
 ### Web App

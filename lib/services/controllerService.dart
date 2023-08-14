@@ -1,7 +1,11 @@
 import 'dart:convert';
+import 'dart:js_util';
 
+import 'package:http/http.dart';
 import 'package:laguna/constants.dart';
+import 'package:laguna/dto/alreadyExistsDto/alreadyExistsDto.dart';
 import 'package:laguna/dto/userDto/userDto.dart';
+import 'package:laguna/helpers/response_helper.dart';
 import 'package:laguna/services/httpService.dart';
 
 /// A class that serves as a controller to handle authentication and user registration operations.
@@ -11,47 +15,53 @@ class Controller {
   /// Returns a tuple containing the [User] instance and the HTTP status code as an [int].
   /// If the login is successful, [User] will contain user information; otherwise, it will be `null`.
   /// If an error occurs during the login process, the corresponding error message will be printed.
-  Future<(User?, int)> login(String username, String password) async {
+  Future<(User?, String?)> login(String username, String password) async {
     Map<String, String> body = {
       "username_or_email": username,
       "password": password,
     };
-    ResponseWrapper response = await HttpService.postRequest(endpoint: Constants.loginEndpoint, body: jsonEncode(body));
+    Response response = await HttpService.postRequest(endpoint: Constants.loginEndpoint, body: jsonEncode(body));
 
-    if (!response.success) {
-      print(response.errorMessage);
+    if (!ResponseHelper.isSuccess(response)) {
+      return (null, response.body);
     }
 
     try {
-      final jsonBody = jsonDecode(response.responseBody!);
-      print(jsonBody);
-      final User user = User.fromJson(jsonBody);
-      return (user, response.statusCode);
+      return (User.fromJson(jsonDecode(response.body)), null);
     } catch (e, s) {
       print(e);
       print(s);
     }
-    return (null, response.statusCode);
+
+    return (null, "Tovor metapodatkov uporabnika pokvarjen.");
   }
 
   /// Performs the user registration operation using the provided [email], [username], and [password].
   ///
   /// Returns the HTTP status code as an [int].
   /// If an error occurs during the registration process, the corresponding error message will be printed.
-  Future<int> register(String email, String username, String password) async {
+  Future<(AlreadyExists?, String?)> register(String email, String username, String password) async {
     Map<String, String> body = {
       "email": email,
       "username": username,
       "password": password,
     };
 
-    ResponseWrapper response =
+    Response response =
         await HttpService.postRequest(endpoint: Constants.registerEndpoint, body: jsonEncode(body));
 
-    if (!response.success) {
-      print(response.errorMessage);
+    if (response.body.isEmpty) {
+      return (null, null);
+    }
+    try {
+      AlreadyExists alreadyExists = AlreadyExists.fromJson(jsonDecode(response.body));
+      return (alreadyExists, alreadyExists.message);
+    }
+    catch (e, s) {
+      print(e);
+      print(s);
     }
 
-    return response.statusCode;
+    return (null, response.body);
   }
 }

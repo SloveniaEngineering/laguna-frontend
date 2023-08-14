@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:laguna/constants.dart';
+import 'package:laguna/dto/alreadyExistsDto/alreadyExistsDto.dart';
 import 'package:laguna/dto/userDto/userDto.dart';
 import 'package:laguna/services/controllerService.dart';
 import 'package:laguna/services/storageService.dart';
@@ -19,31 +20,16 @@ class AuthController extends _$AuthController {
   /// Attempts to register a new user with the provided [email], [username], and [password].
   ///
   /// Returns a [Future] that resolves to `true` if the registration is successful, otherwise `false`.
-  Future<bool> register(
+  Future<(AlreadyExists?, bool)> register(
       {required BuildContext context,
       required String email,
       required String username,
       required String password}) async {
-    int statusCode = await Controller().register(email, username, password);
-    String message;
-    switch (statusCode) {
-      case 200:
-        message = 'Registracija uspešna';
-        break;
-      case 208:
-        message = 'Račun s tem e-poštnim naslovom ali uporabniškim imenom že obstaja.';
-        break;
-      case 400:
-        message = 'Registracija neuspešna. Prosimo, poskusite znova.';
-        break;
-      default:
-        message = 'Registracija neuspešna. Prosimo, poskusite znova.';
-        break;
-    }
-
-    _showMessage(context, message);
-
-    return statusCode == 200;
+    AlreadyExists? alreadyExists;
+    String? errorMessage;
+    (alreadyExists, errorMessage) = await Controller().register(email, username, password);
+    if (errorMessage != null) _showMessage(context, errorMessage);
+    return (alreadyExists, errorMessage == null);
   }
 
   /// Attempts to log in the user with the provided [email] and [password].
@@ -52,10 +38,10 @@ class AuthController extends _$AuthController {
   ///
   /// Returns a [Future] that resolves to `void`.
   Future<void> login({required BuildContext context, required String email, required String password}) async {
-    int? statusCode;
+    String? errorMessage;
     AsyncValue<User?> value = await AsyncValue.guard<User?>(() async {
       User? user;
-      (user, statusCode) = await Controller().login(email, password);
+      (user, errorMessage) = await Controller().login(email, password);
       return user;
     });
 
@@ -67,14 +53,7 @@ class AuthController extends _$AuthController {
       state = value;
     }
 
-    String? message;
-    switch (statusCode) {
-      case 401:
-        message = 'Napačno uporabniško ime ali geslo';
-        break;
-    }
-
-    if (message != null) _showMessage(context, message);
+    if (errorMessage != null) _showMessage(context, errorMessage);
   }
 
   /// Attempts to log in the user with the saved access and refresh tokens.

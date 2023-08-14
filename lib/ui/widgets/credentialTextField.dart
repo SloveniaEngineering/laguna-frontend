@@ -29,6 +29,8 @@ class CredentialTextField extends StatefulWidget {
   /// The function called when the text in the text field changes.
   final Function(String)? onChanged;
 
+  final String? errorText;
+
   /// Creates a [CredentialTextField] widget.
   const CredentialTextField({
     Key? key,
@@ -38,6 +40,7 @@ class CredentialTextField extends StatefulWidget {
     this.autovalidateMode = AutovalidateMode.onUserInteraction,
     this.allowObscureChange = false,
     this.isPasswordVisible = false,
+    this.errorText,
     required this.controller,
     this.onVisibilityTap,
     this.onChanged,
@@ -92,9 +95,11 @@ class _CredentialTextFieldState extends State<CredentialTextField> {
                   )
                 : null,
             errorStyle: const TextStyle(fontWeight: FontWeight.bold),
+            errorText: widget.errorText,
             errorMaxLines: 3),
         validator: widget.validatorFunction,
         autovalidateMode: widget.autovalidateMode,
+
       ),
     );
   }
