@@ -24,8 +24,8 @@ class Controller {
 
     try {
       final jsonBody = jsonDecode(response.responseBody!);
-      print(jsonBody['LoginSuccess']['user']);
-      final User user = User.fromJson(jsonBody['LoginSuccess']['user']);
+      print(jsonBody);
+      final User user = User.fromJson(jsonBody);
       return (user, response.statusCode);
     } catch (e, s) {
       print(e);

@@ -51,7 +51,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           CredentialTextField(
                               mainText: "Email",
                               isPassword: false,
-                              validatorFunction: Validators.requiredEmailValidationHelper,
+                              validatorFunction:
+                                  Validators.requiredEmailValidationHelper,
                               controller: emailController),
                           const SizedBox(height: 10),
                           Container(
@@ -62,7 +63,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                   // TODO: Implement reset password logic
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
-                                      content: Text('Email za ponastavitev gesla je bil poslan.'),
+                                      content: Text(
+                                          'Email za ponastavitev gesla je bil poslan.'),
                                     ),
                                   );
 

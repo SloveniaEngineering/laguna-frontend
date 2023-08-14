@@ -41,7 +41,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("Laguna Prijava", style: TextStyle(fontSize: 30, color: Colors.black)),
+                const Text("Laguna Prijava",
+                    style: TextStyle(fontSize: 30, color: Colors.black)),
                 const SizedBox(height: 35),
                 Align(
                   alignment: Alignment.center,
@@ -55,20 +56,24 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         CredentialTextField(
                             onChanged: (String text) {
                               setState(() {
-                                usernameOrEmailValidatorFunction = text.contains("@")
+                                usernameOrEmailValidatorFunction = text
+                                        .contains("@")
                                     ? Validators.requiredEmailValidationHelper
-                                    : Validators.requiredUsernameValidationHelper;
+                                    : Validators
+                                        .requiredUsernameValidationHelper;
                               });
                             },
                             mainText: "Uporabniško ime ali email",
                             isPassword: false,
                             controller: usernameOrEmailController,
-                            validatorFunction: usernameOrEmailValidatorFunction),
+                            validatorFunction:
+                                usernameOrEmailValidatorFunction),
                         const SizedBox(height: 10),
                         CredentialTextField(
                             mainText: "Geslo",
                             isPassword: true,
-                            validatorFunction: Validators.requiredPasswordValidationHelper,
+                            validatorFunction:
+                                Validators.requiredPasswordValidationHelper,
                             controller: passController,
                             allowObscureChange: true,
                             isPasswordVisible: isPasswordVisible,
@@ -101,7 +106,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             //Forgot password
                             TextButton(
                               onPressed: () {
-                                GoRouter.of(context).push(ForgotPasswordRoute.path);
+                                GoRouter.of(context)
+                                    .push(ForgotPasswordRoute.path);
                               },
                               child: const Text("Pozabljeno geslo?"),
                             ),

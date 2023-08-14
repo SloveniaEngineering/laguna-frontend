@@ -59,20 +59,23 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                             mainText: "Email",
                             isPassword: false,
                             controller: emailController,
-                            validatorFunction: Validators.requiredEmailValidationHelper,
+                            validatorFunction:
+                                Validators.requiredEmailValidationHelper,
                           ),
                           const SizedBox(height: 10),
                           CredentialTextField(
                               mainText: "Username",
                               isPassword: false,
                               controller: usernameController,
-                              validatorFunction: Validators.requiredUsernameValidationHelper),
+                              validatorFunction:
+                                  Validators.requiredUsernameValidationHelper),
                           const SizedBox(height: 10),
                           CredentialTextField(
                             mainText: "Geslo",
                             isPassword: true,
                             controller: passController,
-                            validatorFunction: Validators.requiredPasswordValidationHelper,
+                            validatorFunction:
+                                Validators.requiredPasswordValidationHelper,
                             allowObscureChange: true,
                             isPasswordVisible: isPasswordVisible,
                             onVisibilityTap: () {
@@ -86,12 +89,14 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                             mainText: "Potrdi geslo",
                             isPassword: true,
                             controller: confirmPassController,
-                            validatorFunction: Validators.requiredPasswordValidationHelper,
+                            validatorFunction:
+                                Validators.requiredPasswordValidationHelper,
                             allowObscureChange: true,
                             isPasswordVisible: isConfirmPasswordVisible,
                             onVisibilityTap: () {
                               setState(() {
-                                isConfirmPasswordVisible = !isConfirmPasswordVisible;
+                                isConfirmPasswordVisible =
+                                    !isConfirmPasswordVisible;
                               });
                             },
                           ),
@@ -101,8 +106,11 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                             child: ElevatedButton(
                               onPressed: () async {
                                 if (formKey.currentState!.validate()) {
-                                  if (passController.text == confirmPassController.text) {
-                                    bool success = await ref.read(authControllerProvider.notifier).register(
+                                  if (passController.text ==
+                                      confirmPassController.text) {
+                                    bool success = await ref
+                                        .read(authControllerProvider.notifier)
+                                        .register(
                                           context: context,
                                           email: emailController.text,
                                           username: usernameController.text,
@@ -112,7 +120,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                                   } else {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
-                                        content: Text('Geslo in potrditev gesla se ne ujemata!'),
+                                        content: Text(
+                                            'Geslo in potrditev gesla se ne ujemata!'),
                                       ),
                                     );
                                   }
