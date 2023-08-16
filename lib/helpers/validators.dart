@@ -2,12 +2,21 @@ import 'package:laguna/constants.dart';
 
 /// A collection of static methods to perform various validations on user input fields.
 class Validators {
+  static bool checkEmpty(String input) {
+    return input.trim().isEmpty;
+  }
+
+  static bool checkLengthInBounds(String input, int min, int max) {
+    return input.length >= min && input.length <= max;
+  }
+
   /// Validates the provided email address to ensure it is not empty, follows a valid email format,
   /// and has a proper length within the defined constraints.
   ///
   /// Returns an error message if the validation fails, otherwise returns null.
   static String? requiredEmailValidationHelper(String? input) {
-    if (input == null || input.isEmpty) {
+    input ??= "";
+    if (Validators.checkEmpty(input)) {
       return "Email naslov je obvezen podatek.";
     }
 
@@ -20,8 +29,7 @@ class Validators {
       return "Email naslov ni veljaven.";
     }
 
-    bool properLength = input.length >= Constants.minEmailLength && input.length <= Constants.maxEmailLength;
-    if (!properLength) {
+    if (!Validators.checkLengthInBounds(input, Constants.minEmailLength, Constants.maxEmailLength)) {
       return "Email naslov mora vsebovati od ${Constants.minEmailLength} do vključno ${Constants.maxEmailLength} znakov.";
     }
 
@@ -32,13 +40,12 @@ class Validators {
   ///
   /// Returns an error message if the validation fails, otherwise returns null.
   static String? requiredUsernameValidationHelper(String? input) {
-    if (input == null || input.isEmpty) {
+    input ??= "";
+    if (Validators.checkEmpty(input)) {
       return "Uporabniško ime je obvezen podatek.";
     }
 
-    bool properLength = input.length >= Constants.minUsernameLength && input.length <= Constants.maxUsernameLength;
-
-    if (!properLength) {
+    if (!Validators.checkLengthInBounds(input, Constants.minUsernameLength, Constants.maxUsernameLength)) {
       return "Uporabniško ime mora vsebovati od ${Constants.minUsernameLength} do vključno ${Constants.maxUsernameLength} znakov.";
     }
 
@@ -55,9 +62,7 @@ class Validators {
       return "Geslo je obvezen podatek.";
     }
 
-    bool properLength = input.length >= Constants.minPasswordLength && input.length <= Constants.maxPasswordLength;
-
-    if (!properLength) {
+    if (!Validators.checkLengthInBounds(input, Constants.minPasswordLength, Constants.maxPasswordLength)) {
       return "Geslo mora vsebovati od ${Constants.minPasswordLength} do vključno ${Constants.maxPasswordLength} znakov.";
     }
     return null;

@@ -1,8 +1,7 @@
-
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:laguna/services/authService.dart';
 
 part 'alreadyExistsDto.freezed.dart';
+
 part 'alreadyExistsDto.g.dart';
 
 /// A data transfer object representing a user.
@@ -14,5 +13,6 @@ class AlreadyExists with _$AlreadyExists {
   }) = _AlreadyExists;
 
   /// Create a User instance from a JSON map.
-  factory AlreadyExists.fromJson(Map<String, Object?> json) => _$AlreadyExistsFromJson(json);
+  factory AlreadyExists.fromJson(Map<String, Object?> json) =>
+      _$AlreadyExistsFromJson(json);
 }
