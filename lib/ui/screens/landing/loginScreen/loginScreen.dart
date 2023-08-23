@@ -32,17 +32,17 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           bool isWideScreen = screenWidth > 700;
           if (screenHeight < 550) {
             return SingleChildScrollView(
-                child: _generateForm(
+                child: _generateLoginForm(
                     screenWidth, screenHeight, isWideScreen, context));
           }
-          return _generateForm(
+          return _generateLoginForm(
               screenWidth, screenHeight, isWideScreen, context);
         },
       ),
     );
   }
 
-  Form _generateForm(double screenWidth, double screenHeight, bool isWideScreen, BuildContext context) {
+  Form _generateLoginForm(double screenWidth, double screenHeight, bool isWideScreen, BuildContext context) {
     return Form(
           key: formKey,
           child: LandingBox(
