@@ -29,7 +29,7 @@ class LandingBox extends StatelessWidget {
       alignment: Alignment.center,
       child: Container(
         padding: const EdgeInsets.fromLTRB(10, 40, 10, 40),
-        width: isWideScreen ? 400 : 400,
+        width: 400,
         decoration: isWideScreen
             ? BoxDecoration(
                 shape: BoxShape.rectangle,
