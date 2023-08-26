@@ -3,4 +3,4 @@
     frontend
 </h2>
 
-* For documentation see [Laguna docs](https://sloveniaegnineering.github.io/laguna-docs).
+* For documentation see [Laguna docs](https://sloveniaengineering.github.io/laguna-docs/)
