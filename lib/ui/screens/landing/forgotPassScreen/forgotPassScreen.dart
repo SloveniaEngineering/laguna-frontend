@@ -24,89 +24,83 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           double screenHeight = constraints.maxHeight;
           bool isWideScreen = screenWidth > 700;
 
-          if (screenHeight < 350) {
-            return SingleChildScrollView(
-                child: _generateForgotPwForm(
-                    screenWidth, screenHeight, isWideScreen, context));
-          }
-          return _generateForgotPwForm(
-              screenWidth, screenHeight, isWideScreen, context);
-        },
-      ),
-    );
-  }
-
-  Form _generateForgotPwForm(double screenWidth, double screenHeight, bool isWideScreen, BuildContext context) {
-    return Form(
-          key: formKey,
-          child: LandingBox(
-            screenWidth: screenWidth,
-            screenHeight: screenHeight,
-            isWideScreen: isWideScreen,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  "Pozabljeno geslo",
-                  style: TextStyle(fontSize: 30, color: Colors.black),
-                ),
-                const SizedBox(height: 35),
-                Align(
-                  alignment: Alignment.center,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      CredentialTextField(
-                          mainText: "Email",
-                          isPassword: false,
-                          validatorFunction:
-                              Validators.requiredEmailValidationHelper,
-                          controller: emailController),
-                      const SizedBox(height: 10),
-                      Container(
-                        margin: const EdgeInsets.only(top: 20),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            if (formKey.currentState!.validate()) {
-                              // TODO: Implement reset password logic
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                      'Email za ponastavitev gesla je bil poslan.'),
-                                ),
-                              );
-
-                              // Clear the email field
-                              emailController.clear();
-                            }
-                          },
-                          child: const Text('Pošlji email'),
-                        ),
-                      ),
-                      const SizedBox(height: 25),
-                      Row(
+          return Form(
+            key: formKey,
+            child: LandingBox(
+              screenWidth: screenWidth,
+              screenHeight: screenHeight,
+              isWideScreen: isWideScreen,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "Pozabljeno geslo",
+                    style: TextStyle(fontSize: 30, color: Colors.black),
+                  ),
+                  const SizedBox(height: 35),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: isWideScreen ? screenWidth * 0.25 : null,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            "Se spomnite gesla?",
-                            style: TextStyle(color: Colors.black54),
+                        children: <Widget>[
+                          CredentialTextField(
+                              mainText: "Email",
+                              isPassword: false,
+                              validatorFunction:
+                                  Validators.requiredEmailValidationHelper,
+                              controller: emailController),
+                          const SizedBox(height: 10),
+                          Container(
+                            margin: const EdgeInsets.only(top: 20),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                if (formKey.currentState!.validate()) {
+                                  // TODO: Implement reset password logic
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                          'Email za ponastavitev gesla je bil poslan.'),
+                                    ),
+                                  );
+
+                                  // Clear the email field
+                                  emailController.clear();
+                                }
+                              },
+                              child: const Text('Pošlji email'),
+                            ),
                           ),
-                          TextButton(
-                            onPressed: () {
-                              GoRouter.of(context).pop();
-                            },
-                            child: const Text("Prijava"),
+                          const SizedBox(height: 25),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text(
+                                "Se spomnite gesla?",
+                                style: TextStyle(color: Colors.black54),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  GoRouter.of(context).pop();
+                                },
+                                child: const Text("Prijava"),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        );
+          );
+        },
+      ),
+    );
   }
 }

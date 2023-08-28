@@ -29,7 +29,6 @@ class LandingBox extends StatelessWidget {
       alignment: Alignment.center,
       child: Container(
         padding: const EdgeInsets.fromLTRB(10, 40, 10, 40),
-        width: 400,
         decoration: isWideScreen
             ? BoxDecoration(
                 shape: BoxShape.rectangle,
@@ -50,7 +49,13 @@ class LandingBox extends StatelessWidget {
                 ],
               )
             : null,
-        child: IntrinsicHeight(child: child),
+        child: SizedBox(
+          width: isWideScreen ? screenWidth * 0.3 : screenWidth * 0.9,
+          //height: isWideScreen ? screenHeight * 0.55 : null,
+          child: IntrinsicHeight(
+            child: child,
+          ),
+        ),
       ),
     );
   }
