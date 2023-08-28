@@ -53,7 +53,7 @@ class AuthController extends _$AuthController {
       state = value;
     }
 
-    if (errorMessage != null) _showMessage(context, errorMessage!);
+    if (errorMessage != null) _showMessage(context, errorMessage);
   }
 
   /// Attempts to log in the user with the saved access and refresh tokens.
