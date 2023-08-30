@@ -99,7 +99,6 @@ class _CredentialTextFieldState extends State<CredentialTextField> {
             errorMaxLines: 3),
         validator: widget.validatorFunction,
         autovalidateMode: widget.autovalidateMode,
-
       ),
     );
   }
