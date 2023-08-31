@@ -53,19 +53,19 @@ class RouterListenable extends _$RouterListenable implements Listenable {
   String? redirect(BuildContext context, GoRouterState state) {
     if (this.state.isLoading || this.state.hasError) return null;
 
-    final isSplash = state.location == SplashRoute.path;
-    final isLogin = state.location == LoginRoute.path;
-    final isRegister = state.location == RegisterRoute.path;
-    final isForgotPass = state.location == ForgotPasswordRoute.path;
+    final isSplash = state.uri.toString() == SplashRoute.path;
+    final isLogin = state.uri.toString() == LoginRoute.path;
+    final isRegister = state.uri.toString() == RegisterRoute.path;
+    final isForgotPass = state.uri.toString() == ForgotPasswordRoute.path;
 
     if (isSplash) {
       return _isAuth
           ? HomeRoute.path
-          : (state.location == LoginRoute.path
+          : (state.uri.toString() == LoginRoute.path
               ? null
-              : state.location == RegisterRoute.path
+              : state.uri.toString() == RegisterRoute.path
                   ? null
-                  : state.location == ForgotPasswordRoute.path
+                  : state.uri.toString() == ForgotPasswordRoute.path
                       ? null
                       : LoginRoute.path);
     } else if (isLogin) {

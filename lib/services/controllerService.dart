@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:js_util';
 
 import 'package:http/http.dart';
 import 'package:laguna/constants.dart';
@@ -47,8 +46,7 @@ class Controller {
       "password": password,
     };
 
-    Response response =
-        await HttpService.postRequest(endpoint: Constants.registerEndpoint, body: jsonEncode(body));
+    Response response = await HttpService.postRequest(endpoint: Constants.registerEndpoint, body: jsonEncode(body));
 
     if (response.body.isEmpty) {
       return (null, null);
@@ -56,8 +54,7 @@ class Controller {
     try {
       AlreadyExists alreadyExists = AlreadyExists.fromJson(jsonDecode(response.body));
       return (alreadyExists, alreadyExists.message);
-    }
-    catch (e, s) {
+    } catch (e, s) {
       print(e);
       print(s);
     }
