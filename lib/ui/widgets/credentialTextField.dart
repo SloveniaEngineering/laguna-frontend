@@ -66,13 +66,17 @@ class _CredentialTextFieldState extends State<CredentialTextField> {
       padding: const EdgeInsets.only(left: 8, right: 8),
       child: TextFormField(
         // Set the keyboard type based on [isPassword].
-        keyboardType: widget.isPassword ? TextInputType.visiblePassword : TextInputType.emailAddress,
+        keyboardType: widget.isPassword
+            ? TextInputType.visiblePassword
+            : TextInputType.emailAddress,
 
         // Set the obscureText property based on [allowObscureChange] and [isPasswordVisible].
         obscureText: widget.allowObscureChange && !widget.isPasswordVisible,
 
         // Set the autofill hints based on [isPassword].
-        autofillHints: widget.isPassword ? <String>[AutofillHints.password] : <String>[AutofillHints.email],
+        autofillHints: widget.isPassword
+            ? <String>[AutofillHints.password]
+            : <String>[AutofillHints.email],
 
         // Set other text field properties.
         autofocus: false,
@@ -88,12 +92,13 @@ class _CredentialTextFieldState extends State<CredentialTextField> {
               borderSide: BorderSide(color: Colors.grey),
             ),
             enabledBorder: const OutlineInputBorder(),
-            suffixIcon: widget.onVisibilityTap != null && widget.allowObscureChange
-                ? IconButton(
-                    onPressed: widget.onVisibilityTap,
-                    icon: Icon(icon),
-                  )
-                : null,
+            suffixIcon:
+                widget.onVisibilityTap != null && widget.allowObscureChange
+                    ? IconButton(
+                        onPressed: widget.onVisibilityTap,
+                        icon: Icon(icon),
+                      )
+                    : null,
             errorStyle: const TextStyle(fontWeight: FontWeight.bold),
             errorText: widget.errorText,
             errorMaxLines: 3),

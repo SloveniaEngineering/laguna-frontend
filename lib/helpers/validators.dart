@@ -21,14 +21,16 @@ class Validators {
     }
 
     // regex for email validation
-    const emailRegex = r"^[a-z0-9!#$%&‘*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&‘*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(?<!\.)$";
+    const emailRegex =
+        r"^[a-z0-9!#$%&‘*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&‘*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(?<!\.)$";
 
     final result = RegExp(emailRegex).hasMatch(input.toLowerCase());
     if (!result) {
       return "Email naslov ni veljaven.";
     }
 
-    if (!Validators.checkLengthInBounds(input, Constants.minEmailLength, Constants.maxEmailLength)) {
+    if (!Validators.checkLengthInBounds(
+        input, Constants.minEmailLength, Constants.maxEmailLength)) {
       return "Email naslov mora vsebovati od ${Constants.minEmailLength} do vključno ${Constants.maxEmailLength} znakov.";
     }
 
@@ -44,7 +46,8 @@ class Validators {
       return "Uporabniško ime je obvezen podatek.";
     }
 
-    if (!Validators.checkLengthInBounds(input, Constants.minUsernameLength, Constants.maxUsernameLength)) {
+    if (!Validators.checkLengthInBounds(
+        input, Constants.minUsernameLength, Constants.maxUsernameLength)) {
       return "Uporabniško ime mora vsebovati od ${Constants.minUsernameLength} do vključno ${Constants.maxUsernameLength} znakov.";
     }
 
@@ -61,7 +64,8 @@ class Validators {
       return "Geslo je obvezen podatek.";
     }
 
-    if (!Validators.checkLengthInBounds(input, Constants.minPasswordLength, Constants.maxPasswordLength)) {
+    if (!Validators.checkLengthInBounds(
+        input, Constants.minPasswordLength, Constants.maxPasswordLength)) {
       return "Geslo mora vsebovati od ${Constants.minPasswordLength} do vključno ${Constants.maxPasswordLength} znakov.";
     }
     return null;

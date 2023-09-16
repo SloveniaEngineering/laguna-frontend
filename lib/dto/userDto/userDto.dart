@@ -10,37 +10,16 @@ part 'userDto.g.dart';
 @freezed
 class User with _$User {
   const factory User({
-    /// The unique identifier of the user.
     required String id,
-
-    /// The username of the user.
     required String username,
-
-    /// The date of the user's first login, if available.
-    required String? first_login,
-
-    /// The date of the user's last login, if available.
+    required String first_login,
     required String? last_login,
-
-    /// The URL of the user's avatar, if available.
     required String? avatar_url,
-
-    /// The role of the user (e.g., admin, regular user).
     required String role,
-
-    /// The behavior??? of the user, if available - weird, i know
-    required String? behaviour,
-
-    /// Indicates if the user is currently active.
-    required bool is_active,
-
-    /// Indicates if the user's email has been verified.
+    required String behaviour,
+    required bool is_enabled,
+    required bool is_donator,
     required bool has_verified_email,
-
-    /// Indicates if the user's history is private.
-    required bool is_history_private,
-
-    /// Indicates if the user's profile is private.
     required bool is_profile_private,
   }) = _User;
 

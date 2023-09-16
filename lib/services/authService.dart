@@ -8,26 +8,31 @@ class AuthService {
   ///
   /// The [accessToken] and [refreshToken] are saved to the device's storage for future use.
   /// This method is typically called after successful authentication or token refresh.
-  Future<void> saveTokensToStorage({required String accessToken, required String refreshToken}) async {
+  Future<void> saveTokensToStorage(
+      {required String accessToken, required String refreshToken}) async {
     print("Saving tokens to storage");
     print("Access token: $accessToken");
     print("Refresh token: $refreshToken");
-    StorageService().writeStringToStorage(key: Constants.accessTokenKey, value: accessToken);
-    StorageService().writeStringToStorage(key: Constants.refreshTokenKey, value: refreshToken);
+    StorageService().writeStringToStorage(
+        key: Constants.accessTokenKey, value: accessToken);
+    StorageService().writeStringToStorage(
+        key: Constants.refreshTokenKey, value: refreshToken);
   }
 
   /// Retrieves the access token from storage.
   ///
   /// Returns the access token as a [String] if it exists in storage, otherwise returns `null`.
   Future<String?> getAccessToken() {
-    return StorageService().readStringValueFromStorage(key: Constants.accessTokenKey);
+    return StorageService()
+        .readStringValueFromStorage(key: Constants.accessTokenKey);
   }
 
   /// Retrieves the refresh token from storage.
   ///
   /// Returns the refresh token as a [String] if it exists in storage, otherwise returns `null`.
   Future<String?> getRefreshToken() {
-    return StorageService().readStringValueFromStorage(key: Constants.refreshTokenKey);
+    return StorageService()
+        .readStringValueFromStorage(key: Constants.refreshTokenKey);
   }
 
   /// Checks if a given token is expired.

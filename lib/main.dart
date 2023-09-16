@@ -5,8 +5,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:laguna/routing/router_listenable.dart';
 import 'package:laguna/routing/routes.dart';
 import 'package:laguna/services/storageService.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 
 void main() {
+  usePathUrlStrategy();
   GoRouter.optionURLReflectsImperativeAPIs = true;
   runApp(
     // For widgets to be able to read providers, we need to wrap the entire

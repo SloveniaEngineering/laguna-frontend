@@ -30,7 +30,9 @@ class LagunaSkeleton extends ConsumerWidget {
 
       // Callback for when the selected index changes.
       onSelectedIndexChange: (int index) {
-        ref.read(navigationIndexProvider.notifier).goToIndex(context: context, index: index);
+        ref
+            .read(navigationIndexProvider.notifier)
+            .goToIndex(context: context, index: index);
       },
 
       // List of navigation destinations for the bottom navigation bar.

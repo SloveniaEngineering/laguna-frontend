@@ -21,9 +21,15 @@ class RegisterScreen extends StatelessWidget {
 
           if (screenHeight < 660) {
             return SingleChildScrollView(
-                child: RegisterForm(screenHeight: screenHeight, screenWidth: screenWidth, isWideScreen: isWideScreen));
+                child: RegisterForm(
+                    screenHeight: screenHeight,
+                    screenWidth: screenWidth,
+                    isWideScreen: isWideScreen));
           }
-          return RegisterForm(screenHeight: screenHeight, screenWidth: screenWidth, isWideScreen: isWideScreen);
+          return RegisterForm(
+              screenHeight: screenHeight,
+              screenWidth: screenWidth,
+              isWideScreen: isWideScreen);
         },
       ),
     );
@@ -35,7 +41,11 @@ class RegisterForm extends ConsumerStatefulWidget {
   final double screenHeight;
   final bool isWideScreen;
 
-  const RegisterForm({super.key, required this.screenWidth, required this.screenHeight, required this.isWideScreen});
+  const RegisterForm(
+      {super.key,
+      required this.screenWidth,
+      required this.screenHeight,
+      required this.isWideScreen});
 
   @override
   ConsumerState<RegisterForm> createState() => _RegisterFormState();
@@ -90,13 +100,15 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
                           ? null
                           : "Uporabniško ime že obstaja."
                               "Tukaj je nekaj podobnih, med katerimi lahko izbirate: ${usernameRecommendations.join(", ")}",
-                      validatorFunction: Validators.requiredUsernameValidationHelper),
+                      validatorFunction:
+                          Validators.requiredUsernameValidationHelper),
                   const SizedBox(height: 10),
                   CredentialTextField(
                     mainText: "Geslo",
                     isPassword: true,
                     controller: passController,
-                    validatorFunction: Validators.requiredPasswordValidationHelper,
+                    validatorFunction:
+                        Validators.requiredPasswordValidationHelper,
                     allowObscureChange: true,
                     isPasswordVisible: isPasswordVisible,
                     onVisibilityTap: () {
@@ -110,7 +122,8 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
                     mainText: "Potrdi geslo",
                     isPassword: true,
                     controller: confirmPassController,
-                    validatorFunction: Validators.requiredPasswordValidationHelper,
+                    validatorFunction:
+                        Validators.requiredPasswordValidationHelper,
                     allowObscureChange: true,
                     isPasswordVisible: isConfirmPasswordVisible,
                     onVisibilityTap: () {
@@ -125,10 +138,13 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
                     child: ElevatedButton(
                       onPressed: () async {
                         if (formKey.currentState!.validate()) {
-                          if (passController.text == confirmPassController.text) {
+                          if (passController.text ==
+                              confirmPassController.text) {
                             AlreadyExists? alreadyExists;
                             bool success;
-                            (alreadyExists, success) = await ref.read(authControllerProvider.notifier).register(
+                            (alreadyExists, success) = await ref
+                                .read(authControllerProvider.notifier)
+                                .register(
                                   context: context,
                                   email: emailController.text,
                                   username: usernameController.text,
@@ -136,14 +152,16 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
                                 );
                             if (alreadyExists != null) {
                               setState(() {
-                                usernameRecommendations = alreadyExists!.recommended_usernames;
+                                usernameRecommendations =
+                                    alreadyExists!.recommended_usernames;
                               });
                             }
                             if (success) GoRouter.of(context).pop();
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                content: Text('Geslo in potrditev gesla se ne ujemata!'),
+                                content: Text(
+                                    'Geslo in potrditev gesla se ne ujemata!'),
                               ),
                             );
                           }

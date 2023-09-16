@@ -30,7 +30,8 @@ class StorageService {
   /// An optional [defaultValue] can be provided to return a default value if the key is not found or if an error occurs.
   ///
   /// Returns a [Future] that resolves to the integer value associated with the key, or the default value.
-  Future<int?> readIntValueFromStorage({required String key, int defaultValue = 0}) async {
+  Future<int?> readIntValueFromStorage(
+      {required String key, int defaultValue = 0}) async {
     SharedPreferences storage = await initStorage();
     try {
       return storage.getInt(key) ?? defaultValue;
@@ -43,7 +44,8 @@ class StorageService {
   /// Writes a value to storage with the specified [key].
   ///
   /// The [value] must be a [String].
-  Future<void> writeStringToStorage({required key, required String value}) async {
+  Future<void> writeStringToStorage(
+      {required key, required String value}) async {
     SharedPreferences storage = await initStorage();
     await storage.setString(key, value);
   }

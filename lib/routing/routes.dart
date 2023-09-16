@@ -25,7 +25,8 @@ class LoginRoute extends GoRouteData {
 }
 
 /// TypedGoRoute for the Register screen.
-@TypedGoRoute<RegisterRoute>(path: RegisterRoute.path, name: RegisterRoute.pageName)
+@TypedGoRoute<RegisterRoute>(
+    path: RegisterRoute.path, name: RegisterRoute.pageName)
 class RegisterRoute extends GoRouteData {
   const RegisterRoute();
   static const pageName = 'Registracija';
@@ -38,7 +39,8 @@ class RegisterRoute extends GoRouteData {
 }
 
 /// TypedGoRoute for the Forgot Password screen.
-@TypedGoRoute<ForgotPasswordRoute>(path: ForgotPasswordRoute.path, name: ForgotPasswordRoute.pageName)
+@TypedGoRoute<ForgotPasswordRoute>(
+    path: ForgotPasswordRoute.path, name: ForgotPasswordRoute.pageName)
 class ForgotPasswordRoute extends GoRouteData {
   const ForgotPasswordRoute();
   static const pageName = 'Pozabljeno geslo';
@@ -97,7 +99,8 @@ class HomeRoute extends GoRouteData {
 }
 
 /// TypedGoRoute for the Account screen.
-@TypedGoRoute<AccountRoute>(path: AccountRoute.path, name: AccountRoute.pageName)
+@TypedGoRoute<AccountRoute>(
+    path: AccountRoute.path, name: AccountRoute.pageName)
 class AccountRoute extends GoRouteData {
   const AccountRoute();
   static const pageName = 'My Account';

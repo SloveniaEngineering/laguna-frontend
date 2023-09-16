@@ -27,7 +27,8 @@ class AuthController extends _$AuthController {
       required String password}) async {
     AlreadyExists? alreadyExists;
     String? errorMessage;
-    (alreadyExists, errorMessage) = await Controller().register(email, username, password);
+    (alreadyExists, errorMessage) =
+        await Controller().register(email, username, password);
     if (errorMessage != null) _showMessage(context, errorMessage);
     return (alreadyExists, errorMessage == null);
   }
@@ -37,7 +38,10 @@ class AuthController extends _$AuthController {
   /// Displays a snack bar with an error message if the login fails.
   ///
   /// Returns a [Future] that resolves to `void`.
-  Future<void> login({required BuildContext context, required String email, required String password}) async {
+  Future<void> login(
+      {required BuildContext context,
+      required String email,
+      required String password}) async {
     String? errorMessage;
     AsyncValue<User?> value = await AsyncValue.guard<User?>(() async {
       User? user;
@@ -45,11 +49,7 @@ class AuthController extends _$AuthController {
       return user;
     });
 
-    if (value is AsyncError) {
-      print(value.error);
-    } else if (value is AsyncData) {
-      print("setting state");
-      print(value.hasValue);
+    if (value is AsyncData) {
       state = value;
     }
 
@@ -60,11 +60,12 @@ class AuthController extends _$AuthController {
   ///
   /// Returns a [Future] that resolves to the [User] if the login is successful, otherwise `null`.
   Future<User?> _loginWithSavedTokens() async {
-    print("Test1");
-    final String? accessToken =
-        await ref.read(storageServiceProvider).readStringValueFromStorage(key: Constants.accessTokenKey);
-    final String? refreshToken =
-        await ref.read(storageServiceProvider).readStringValueFromStorage(key: Constants.refreshTokenKey);
+    final String? accessToken = await ref
+        .read(storageServiceProvider)
+        .readStringValueFromStorage(key: Constants.accessTokenKey);
+    final String? refreshToken = await ref
+        .read(storageServiceProvider)
+        .readStringValueFromStorage(key: Constants.refreshTokenKey);
     if (accessToken == null || refreshToken == null) return null;
     if (JwtDecoder.isExpired(accessToken)) {
       print('Access token expired, forcing user to re-login');
@@ -90,8 +91,12 @@ class AuthController extends _$AuthController {
   /// Logs out the user and clears the access and refresh tokens from storage.
   Future<void> logout() async {
     print('Logging out user');
-    await ref.read(storageServiceProvider).deleteStorageByKey(key: Constants.accessTokenKey);
-    await ref.read(storageServiceProvider).deleteStorageByKey(key: Constants.refreshTokenKey);
+    await ref
+        .read(storageServiceProvider)
+        .deleteStorageByKey(key: Constants.accessTokenKey);
+    await ref
+        .read(storageServiceProvider)
+        .deleteStorageByKey(key: Constants.refreshTokenKey);
     state = const AsyncValue<User?>.data(null);
   }
 
@@ -99,8 +104,9 @@ class AuthController extends _$AuthController {
   /// If _anything_ goes wrong, deletes the internal token and returns a [User.signedOut].
   Future<User?> _loginRecoveryAttempt() async {
     try {
-      final String? savedToken =
-          await ref.read(storageServiceProvider).readStringValueFromStorage(key: Constants.accessTokenKey);
+      final String? savedToken = await ref
+          .read(storageServiceProvider)
+          .readStringValueFromStorage(key: Constants.accessTokenKey);
       //if (savedToken == null) throw const UnauthorizedException('No auth token found');
 
       //If user had remember me checked, then we try to login with the saved credentials
@@ -120,8 +126,12 @@ class AuthController extends _$AuthController {
       if (next.isLoading) return;
       if (next.hasError) {
         print('hasErrorMethodCalled');
-        ref.read(storageServiceProvider).deleteStorageByKey(key: Constants.accessTokenKey);
-        ref.read(storageServiceProvider).deleteStorageByKey(key: Constants.refreshTokenKey);
+        ref
+            .read(storageServiceProvider)
+            .deleteStorageByKey(key: Constants.accessTokenKey);
+        ref
+            .read(storageServiceProvider)
+            .deleteStorageByKey(key: Constants.refreshTokenKey);
       }
 
       if (await next.value.isLoggedIn()) {
