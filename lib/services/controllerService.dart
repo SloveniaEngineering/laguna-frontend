@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:laguna/constants.dart';
 import 'package:laguna/dto/alreadyExistsDto/alreadyExistsDto.dart';
@@ -28,8 +29,8 @@ class Controller {
     try {
       return (User.fromJson(jsonDecode(response.body)), null);
     } catch (e, s) {
-      print(e);
-      print(s);
+      debugPrint(e.toString());
+      debugPrint(s.toString());
     }
 
     return (null, "Tovor metapodatkov uporabnika pokvarjen.");
@@ -55,8 +56,8 @@ class Controller {
       AlreadyExists alreadyExists = AlreadyExists.fromJson(jsonDecode(response.body));
       return (alreadyExists, alreadyExists.message);
     } catch (e, s) {
-      print(e);
-      print(s);
+      debugPrint(e.toString());
+      debugPrint(s.toString());
     }
 
     return (null, response.body);

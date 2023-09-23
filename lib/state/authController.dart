@@ -46,10 +46,10 @@ class AuthController extends _$AuthController {
     });
 
     if (value is AsyncError) {
-      print(value.error);
+      debugPrint(value.error.toString());
     } else if (value is AsyncData) {
-      print("setting state");
-      print(value.hasValue);
+      debugPrint("setting state");
+      debugPrint(value.hasValue.toString());
       state = value;
     }
 
@@ -60,18 +60,18 @@ class AuthController extends _$AuthController {
   ///
   /// Returns a [Future] that resolves to the [User] if the login is successful, otherwise `null`.
   Future<User?> _loginWithSavedTokens() async {
-    print("Test1");
+    debugPrint("Test1");
     final String? accessToken =
         await ref.read(storageServiceProvider).readStringValueFromStorage(key: Constants.accessTokenKey);
     final String? refreshToken =
         await ref.read(storageServiceProvider).readStringValueFromStorage(key: Constants.refreshTokenKey);
     if (accessToken == null || refreshToken == null) return null;
     if (JwtDecoder.isExpired(accessToken)) {
-      print('Access token expired, forcing user to re-login');
+      debugPrint('Access token expired, forcing user to re-login');
       //return await _loginWithSavedCredentials();
       return null;
     } else {
-      print('Attempting to login with saved tokens');
+      debugPrint('Attempting to login with saved tokens');
       User user = User.fromJson(JwtDecoder.decode(refreshToken));
       state = AsyncValue<User?>.data(user);
       return user;
@@ -89,7 +89,7 @@ class AuthController extends _$AuthController {
 
   /// Logs out the user and clears the access and refresh tokens from storage.
   Future<void> logout() async {
-    print('Logging out user');
+    debugPrint('Logging out user');
     await ref.read(storageServiceProvider).deleteStorageByKey(key: Constants.accessTokenKey);
     await ref.read(storageServiceProvider).deleteStorageByKey(key: Constants.refreshTokenKey);
     state = const AsyncValue<User?>.data(null);
@@ -119,15 +119,15 @@ class AuthController extends _$AuthController {
     ref.listenSelf((_, next) async {
       if (next.isLoading) return;
       if (next.hasError) {
-        print('hasErrorMethodCalled');
+        debugPrint('hasErrorMethodCalled');
         ref.read(storageServiceProvider).deleteStorageByKey(key: Constants.accessTokenKey);
         ref.read(storageServiceProvider).deleteStorageByKey(key: Constants.refreshTokenKey);
       }
 
       if (await next.value.isLoggedIn()) {
-        print('isLoggedInMethodCalled');
+        debugPrint('isLoggedInMethodCalled');
       } else if (await next.value.isLoggedOut()) {
-        print('isLoggedOutMethodCalled');
+        debugPrint('isLoggedOutMethodCalled');
       }
     });
   }

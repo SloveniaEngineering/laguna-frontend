@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:laguna/constants.dart';
 import 'package:laguna/services/storageService.dart';
@@ -9,9 +10,9 @@ class AuthService {
   /// The [accessToken] and [refreshToken] are saved to the device's storage for future use.
   /// This method is typically called after successful authentication or token refresh.
   Future<void> saveTokensToStorage({required String accessToken, required String refreshToken}) async {
-    print("Saving tokens to storage");
-    print("Access token: $accessToken");
-    print("Refresh token: $refreshToken");
+    debugPrint("Saving tokens to storage");
+    debugPrint("Access token: $accessToken");
+    debugPrint("Refresh token: $refreshToken");
     StorageService().writeStringToStorage(key: Constants.accessTokenKey, value: accessToken);
     StorageService().writeStringToStorage(key: Constants.refreshTokenKey, value: refreshToken);
   }

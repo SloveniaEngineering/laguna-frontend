@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:laguna/dto/userDto/userDto.dart';
+import 'package:laguna/routing/routes.dart';
 import 'package:laguna/state/authController.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-
-import 'routes.dart';
 
 part 'router_listenable.g.dart';
 

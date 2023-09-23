@@ -176,6 +176,5 @@ class _LoginFormState extends ConsumerState<LoginForm> {
         ),
       ),
     );
-    ;
   }
 }

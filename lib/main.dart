@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
@@ -7,6 +8,10 @@ import 'package:laguna/routing/routes.dart';
 import 'package:laguna/services/storageService.dart';
 
 void main() {
+  if (kReleaseMode) {
+    debugPrint = (String? message, {int? wrapWidth}) {};
+  }
+
   GoRouter.optionURLReflectsImperativeAPIs = true;
   runApp(
     // For widgets to be able to read providers, we need to wrap the entire
