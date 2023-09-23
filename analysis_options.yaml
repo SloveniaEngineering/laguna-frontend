@@ -22,8 +22,31 @@ linter:
   # `// ignore_for_file: name_of_lint` syntax on the line or in the file
   # producing the lint.
   rules:
-    # avoid_print: false  # Uncomment to disable the `avoid_print` rule
-    # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
+    avoid_print: true  # Avoid print calls in production code.
+    always_use_package_imports: true #Avoid relative imports for files in lib/.
+    line_length: 120 #The line length should not exceed 120 characters.
+    avoid_empty_else: true #Avoid empty else statements.
+    avoid_slow_async_io: true #Avoid slow async dart:io methods.
+    avoid_types_as_parameter_names: true #Avoid types as parameter names.
+    cancel_subscriptions: true #Cancel instances of dart.async.StreamSubscription.
+    close_sinks: true #Close instances of dart.core.Sink.
+    unnecessary_this: true #Don’t access members with this unless avoiding shadowing.
+    unnecessary_to_list_in_spreads: true #Unnecessary toList() in spreads.
+    empty_statements: true #Avoid empty statements.
+    hash_and_equals: true #Always override hashCode if overriding ==.
+    no_duplicate_case_values: true #Don’t use more than one case with same value.
+    prefer_const_constructors: true #Prefer const with constant constructors.
+    unrelated_type_equality_checks: true #Equality operator == invocation with references of unrelated types.
+    use_key_in_widget_constructors: true #Use key in widget constructors.
+    avoid_unnecessary_containers: true #Avoid unnecessary containers.
+    curly_braces_in_flow_control_structures: true #DO use curly braces for all flow control structures.
+    empty_constructor_bodies: true #Use ; instead of {} for empty constructor bodies.
+    prefer_final_fields: true #When building maps from iterables, it is preferable to use ‘for’ elements because of better performance
+    prefer_for_elements_to_map_fromIterable: true
+    use_enums: true #Classes that look like enumerations should be declared as enums.
+    use_decorated_box: true #use DecoratedBox when Container has only a Decoration. A Container is a heavier Widget than a DecoratedBox, and as bonus, DecoratedBox has a const constructor.
+    avoid_function_literals_in_foreach_calls: true #Avoid function literals in for-each calls.
+
 analyzer:
   plugins:
     - custom_lint
