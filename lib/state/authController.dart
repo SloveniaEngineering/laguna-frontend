@@ -104,6 +104,7 @@ class AuthController extends _$AuthController {
   /// If _anything_ goes wrong, deletes the internal token and returns a [User.signedOut].
   Future<User?> _loginRecoveryAttempt() async {
     try {
+      // ignore: unused_local_variable
       final String? savedToken = await ref
           .read(storageServiceProvider)
           .readStringValueFromStorage(key: Constants.accessTokenKey);
