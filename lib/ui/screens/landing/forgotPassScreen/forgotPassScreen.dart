@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:laguna/helpers/validators.dart';
 import 'package:laguna/ui/widgets/credentialTextField.dart';
-import 'package:laguna/ui/widgets/landingBox.dart';
+import 'package:laguna/ui/widgets/landing_button.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);
@@ -28,9 +28,18 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         ),
         Center(
           child: SingleChildScrollView(
-            child: Form(
-              key: formKey,
-              child: LandingBox(
+            child: Container(
+              padding: const EdgeInsets.fromLTRB(10, 40, 10, 40),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.9),
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              constraints: const BoxConstraints(
+                maxWidth: 450,
+              ),
+              child: Form(
+                key: formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -55,9 +64,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                     Validators.requiredEmailValidationHelper,
                                 controller: emailController),
                             const SizedBox(height: 10),
-                            Container(
-                              margin: const EdgeInsets.only(top: 20),
-                              child: ElevatedButton(
+                            LandingButton(
                                 onPressed: () {
                                   if (formKey.currentState!.validate()) {
                                     // TODO: Implement reset password logic
@@ -72,9 +79,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                     emailController.clear();
                                   }
                                 },
-                                child: const Text('Pošlji email'),
-                              ),
-                            ),
+                                text: 'Send email'),
                             const SizedBox(height: 25),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,

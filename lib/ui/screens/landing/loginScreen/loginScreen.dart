@@ -7,7 +7,7 @@ import 'package:laguna/routing/routes.dart';
 import 'package:laguna/state/authController.dart';
 import 'package:laguna/ui/spacing/spacing.dart';
 import 'package:laguna/ui/widgets/credentialTextField.dart';
-import 'package:laguna/ui/widgets/landingBox.dart';
+import 'package:laguna/ui/widgets/landing_button.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -26,7 +26,16 @@ class LoginScreen extends StatelessWidget {
             ),
             Center(
               child: SingleChildScrollView(
-                child: LandingBox(
+                child: Container(
+                  padding: const EdgeInsets.fromLTRB(10, 40, 10, 40),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.9),
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  constraints: const BoxConstraints(
+                    maxWidth: 450,
+                  ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -152,15 +161,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
               ),
             ),
             verticalMargin20,
-            SizedBox(
-              height: 50,
-              width: double.infinity,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(const Color(0xFF93FB9D)),
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)))),
+            LandingButton(
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
                     ref.read(authControllerProvider.notifier).login(
@@ -170,12 +171,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                         );
                   }
                 },
-                child: const Text(
-                  'LOG IN',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
+                text: 'LOG IN')
           ],
         ),
       ),
