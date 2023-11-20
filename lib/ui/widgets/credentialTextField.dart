@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:laguna/ui/spacing/padding.dart';
 
 /// A custom text field widget used for inputting credentials (email and password).
 class CredentialTextField extends StatefulWidget {
@@ -62,8 +63,7 @@ class _CredentialTextFieldState extends State<CredentialTextField> {
     }
 
     return Container(
-      margin: const EdgeInsets.only(top: 4),
-      padding: const EdgeInsets.only(left: 8, right: 8),
+      margin: verticalPadding4,
       child: TextFormField(
         // Set the keyboard type based on [isPassword].
         keyboardType: widget.isPassword

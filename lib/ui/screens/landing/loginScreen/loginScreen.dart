@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:laguna/helpers/validators.dart';
 import 'package:laguna/routing/routes.dart';
 import 'package:laguna/state/authController.dart';
+import 'package:laguna/ui/spacing/spacing.dart';
 import 'package:laguna/ui/widgets/credentialTextField.dart';
 import 'package:laguna/ui/widgets/landingBox.dart';
 
@@ -13,39 +15,67 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-          double screenWidth = constraints.maxWidth;
-          double screenHeight = constraints.maxHeight;
-          bool isWideScreen = screenWidth > 700;
-          if (screenHeight < 550) {
-            return SingleChildScrollView(
-                child: LoginForm(
-              screenWidth: screenWidth,
-              screenHeight: screenHeight,
-              isWideScreen: isWideScreen,
-            ));
-          }
-          return LoginForm(
-            screenWidth: screenWidth,
-            screenHeight: screenHeight,
-            isWideScreen: isWideScreen,
-          );
-        },
+      body: SizedBox(
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: Image.asset(
+                "assets/images/login-bg-img.png",
+                fit: BoxFit.cover,
+              ),
+            ),
+            Center(
+              child: SingleChildScrollView(
+                child: LandingBox(
+                  screenHeight: MediaQuery.sizeOf(context).height,
+                  screenWidth: MediaQuery.sizeOf(context).width,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SvgPicture.asset("assets/images/logo-text.svg"),
+                      verticalMargin32,
+                      Row(
+                        children: [
+                          const Text(
+                            "Sign in or",
+                            style: TextStyle(color: Colors.black54),
+                          ),
+                          TextButton(
+                            style: ButtonStyle(
+                              overlayColor:
+                                  MaterialStateProperty.all(Colors.transparent),
+                            ),
+                            onPressed: () {
+                              GoRouter.of(context).push(RegisterRoute.path);
+                            },
+                            child: const Text(
+                              "create an account",
+                              style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  color: Colors.black),
+                            ),
+                          ),
+                        ],
+                      ),
+                      verticalMargin8,
+                      const LoginForm(isWideScreen: true)
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
 class LoginForm extends ConsumerStatefulWidget {
-  final double screenWidth;
-  final double screenHeight;
   final bool isWideScreen;
-  const LoginForm(
-      {super.key,
-      required this.screenWidth,
-      required this.screenHeight,
-      required this.isWideScreen});
+  const LoginForm({super.key, required this.isWideScreen});
 
   @override
   ConsumerState<LoginForm> createState() => _LoginFormState();
@@ -63,123 +93,92 @@ class _LoginFormState extends ConsumerState<LoginForm> {
   Widget build(BuildContext context) {
     return Form(
       key: formKey,
-      child: LandingBox(
-        screenWidth: widget.screenWidth,
-        screenHeight: widget.screenHeight,
-        isWideScreen: widget.isWideScreen,
-        child: AutofillGroup(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                "Laguna Prijava",
-                style: TextStyle(fontSize: 30, color: Colors.black),
+      child: AutofillGroup(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CredentialTextField(
+              onChanged: (String text) {
+                setState(() {
+                  usernameOrEmailValidatorFunction = text.contains("@")
+                      ? Validators.requiredEmailValidationHelper
+                      : Validators.requiredUsernameValidationHelper;
+                });
+              },
+              mainText: "Uporabniško ime ali email",
+              isPassword: false,
+              controller: usernameOrEmailController,
+              validatorFunction: usernameOrEmailValidatorFunction,
+            ),
+            verticalMargin16,
+            CredentialTextField(
+              mainText: "Geslo",
+              isPassword: true,
+              validatorFunction: Validators.requiredPasswordValidationHelper,
+              controller: passController,
+              allowObscureChange: true,
+              isPasswordVisible: isPasswordVisible,
+              onVisibilityTap: () {
+                setState(() {
+                  isPasswordVisible = !isPasswordVisible;
+                });
+              },
+            ),
+            verticalMargin16,
+            Row(
+              children: [
+                Checkbox(
+                  value: rememberMe,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      rememberMe = value!;
+                    });
+                  },
+                ),
+                const Text("Remember me"),
+              ],
+            ),
+            verticalMargin12,
+            TextButton(
+              style: ButtonStyle(
+                padding: MaterialStateProperty.all(EdgeInsets.zero),
+                overlayColor: MaterialStateProperty.all(Colors.transparent),
               ),
-              const SizedBox(height: 35),
-              Align(
-                alignment: Alignment.center,
-                child: Container(
-                  alignment: Alignment.center,
-                  width: widget.isWideScreen ? 400 : null,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      CredentialTextField(
-                        onChanged: (String text) {
-                          setState(() {
-                            usernameOrEmailValidatorFunction = text
-                                    .contains("@")
-                                ? Validators.requiredEmailValidationHelper
-                                : Validators.requiredUsernameValidationHelper;
-                          });
-                        },
-                        mainText: "Uporabniško ime ali email",
-                        isPassword: false,
-                        controller: usernameOrEmailController,
-                        validatorFunction: usernameOrEmailValidatorFunction,
-                      ),
-                      const SizedBox(height: 10),
-                      CredentialTextField(
-                        mainText: "Geslo",
-                        isPassword: true,
-                        validatorFunction:
-                            Validators.requiredPasswordValidationHelper,
-                        controller: passController,
-                        allowObscureChange: true,
-                        isPasswordVisible: isPasswordVisible,
-                        onVisibilityTap: () {
-                          setState(() {
-                            isPasswordVisible = !isPasswordVisible;
-                          });
-                        },
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Row(
-                            children: [
-                              Checkbox(
-                                value: rememberMe,
-                                onChanged: (bool? value) {
-                                  setState(() {
-                                    rememberMe = value!;
-                                  });
-                                },
-                              ),
-                              const Text("Zapomni si me"),
-                            ],
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              GoRouter.of(context)
-                                  .push(ForgotPasswordRoute.path);
-                            },
-                            child: const Text("Pozabljeno geslo?"),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 20),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            if (formKey.currentState!.validate()) {
-                              ref.read(authControllerProvider.notifier).login(
-                                    context: context,
-                                    email: usernameOrEmailController.text,
-                                    password: passController.text,
-                                  );
-                            }
-                          },
-                          child: const Text('Prijava'),
-                        ),
-                      ),
-                      const SizedBox(height: 25),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            "Nimate računa?",
-                            style: TextStyle(color: Colors.black54),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              GoRouter.of(context).push(RegisterRoute.path);
-                            },
-                            child: const Text("Registracija"),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+              onPressed: () {
+                GoRouter.of(context).push(ForgotPasswordRoute.path);
+              },
+              child: const Text(
+                "Forgotten password",
+                style: TextStyle(color: Colors.black54),
+              ),
+            ),
+            verticalMargin20,
+            SizedBox(
+              height: 50,
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(const Color(0xFF93FB9D)),
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)))),
+                onPressed: () {
+                  if (formKey.currentState!.validate()) {
+                    ref.read(authControllerProvider.notifier).login(
+                          context: context,
+                          email: usernameOrEmailController.text,
+                          password: passController.text,
+                        );
+                  }
+                },
+                child: const Text(
+                  'LOG IN',
+                  style: TextStyle(color: Colors.white),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
