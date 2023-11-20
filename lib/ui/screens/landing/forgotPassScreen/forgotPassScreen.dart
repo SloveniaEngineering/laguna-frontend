@@ -21,14 +21,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           double screenWidth = constraints.maxWidth;
-          double screenHeight = constraints.maxHeight;
           bool isWideScreen = screenWidth > 700;
 
           return Form(
             key: formKey,
             child: LandingBox(
-              screenWidth: screenWidth,
-              screenHeight: screenHeight,
               child: Container(
                 color: Colors.red,
                 child: Column(
