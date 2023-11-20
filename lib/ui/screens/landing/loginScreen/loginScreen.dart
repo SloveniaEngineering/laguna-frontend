@@ -27,8 +27,6 @@ class LoginScreen extends StatelessWidget {
             Center(
               child: SingleChildScrollView(
                 child: LandingBox(
-                  screenHeight: MediaQuery.sizeOf(context).height,
-                  screenWidth: MediaQuery.sizeOf(context).width,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,

@@ -66,8 +66,6 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
     return Form(
       key: formKey,
       child: LandingBox(
-        screenHeight: widget.screenHeight,
-        screenWidth: widget.screenWidth,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
