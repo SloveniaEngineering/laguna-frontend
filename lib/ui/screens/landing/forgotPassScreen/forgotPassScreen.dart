@@ -18,16 +18,19 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-          double screenWidth = constraints.maxWidth;
-          bool isWideScreen = screenWidth > 700;
-
-          return Form(
-            key: formKey,
-            child: LandingBox(
-              child: Container(
-                color: Colors.red,
+        body: Stack(
+      children: [
+        Positioned.fill(
+          child: Image.asset(
+            "assets/images/login-bg-img.png",
+            fit: BoxFit.cover,
+          ),
+        ),
+        Center(
+          child: SingleChildScrollView(
+            child: Form(
+              key: formKey,
+              child: LandingBox(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -41,7 +44,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       alignment: Alignment.center,
                       child: Container(
                         alignment: Alignment.center,
-                        width: isWideScreen ? screenWidth * 0.25 : null,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -65,7 +67,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                             'Email za ponastavitev gesla je bil poslan.'),
                                       ),
                                     );
-              
+
                                     // Clear the email field
                                     emailController.clear();
                                   }
@@ -97,9 +99,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 ),
               ),
             ),
-          );
-        },
-      ),
-    );
+          ),
+        ),
+      ],
+    ));
   }
 }
