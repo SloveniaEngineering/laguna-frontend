@@ -53,11 +53,11 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
       child: Center(
         child: SingleChildScrollView(
           child: Container(
-            padding: const EdgeInsets.fromLTRB(10, 40, 10, 40),
+            padding: const EdgeInsets.all(40),
             decoration: BoxDecoration(
               color: Colors.white.withOpacity(0.9),
               shape: BoxShape.rectangle,
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(20),
             ),
             constraints: const BoxConstraints(
               maxWidth: 450,
