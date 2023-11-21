@@ -43,7 +43,10 @@ class LoginScreen extends StatelessWidget {
                     children: [
                       SvgPicture.asset("assets/images/logo-text.svg"),
                       verticalMargin32,
+                      const LoginForm(isWideScreen: true),
+                      verticalMargin12,
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Text(
                             "Sign in or",
@@ -66,8 +69,6 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      verticalMargin8,
-                      const LoginForm(isWideScreen: true)
                     ],
                   ),
                 ),
