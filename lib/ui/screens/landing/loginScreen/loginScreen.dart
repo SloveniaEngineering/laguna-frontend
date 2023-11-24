@@ -20,7 +20,7 @@ class LoginScreen extends StatelessWidget {
           children: [
             Positioned.fill(
               child: Image.asset(
-                "assets/images/login-bg-img.png",
+                "../assets/images/login-bg-img.png",
                 fit: BoxFit.cover,
               ),
             ),
@@ -39,34 +39,36 @@ class LoginScreen extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SvgPicture.asset("assets/images/logo-text.svg"),
+                      SvgPicture.asset("../assets/images/logo.svg"),
+                      const Text("Prijava", style: TextStyle(fontSize: 30),),
                       verticalMargin32,
                       const LoginForm(isWideScreen: true),
                       verticalMargin12,
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          const Text(
-                            "Sign in or",
-                            style: TextStyle(color: Colors.black54),
-                          ),
                           TextButton(
-                            style: ButtonStyle(
-                              overlayColor:
-                                  MaterialStateProperty.all(Colors.transparent),
+                            onPressed: () {
+                              GoRouter.of(context).push(ForgotPasswordRoute.path);
+                            },
+                            child: const Text(
+                              "Pozabil sem geslo",
                             ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          TextButton(
                             onPressed: () {
                               GoRouter.of(context).push(RegisterRoute.path);
                             },
                             child: const Text(
-                              "create an account",
-                              style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  color: Colors.black),
-                            ),
-                          ),
+                              "Registriraj nov račun",
+                            ),)
                         ],
                       ),
                     ],
@@ -144,22 +146,8 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                     });
                   },
                 ),
-                const Text("Remember me"),
+                const Text("Zapomni si me"),
               ],
-            ),
-            verticalMargin12,
-            TextButton(
-              style: ButtonStyle(
-                padding: MaterialStateProperty.all(EdgeInsets.zero),
-                overlayColor: MaterialStateProperty.all(Colors.transparent),
-              ),
-              onPressed: () {
-                GoRouter.of(context).push(ForgotPasswordRoute.path);
-              },
-              child: const Text(
-                "Forgotten password",
-                style: TextStyle(color: Colors.black54),
-              ),
             ),
             verticalMargin20,
             LandingButton(
@@ -172,7 +160,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                         );
                   }
                 },
-                text: 'LOG IN')
+                text: 'Vpiši me'),
           ],
         ),
       ),
