@@ -41,7 +41,11 @@ class LoginForm extends ConsumerStatefulWidget {
   final double screenWidth;
   final double screenHeight;
   final bool isWideScreen;
-  const LoginForm({super.key, required this.screenWidth, required this.screenHeight, required this.isWideScreen});
+  const LoginForm(
+      {super.key,
+      required this.screenWidth,
+      required this.screenHeight,
+      required this.isWideScreen});
 
   @override
   ConsumerState<LoginForm> createState() => _LoginFormState();
@@ -85,7 +89,8 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                       CredentialTextField(
                         onChanged: (String text) {
                           setState(() {
-                            usernameOrEmailValidatorFunction = text.contains("@")
+                            usernameOrEmailValidatorFunction = text
+                                    .contains("@")
                                 ? Validators.requiredEmailValidationHelper
                                 : Validators.requiredUsernameValidationHelper;
                           });
@@ -99,7 +104,8 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                       CredentialTextField(
                         mainText: "Geslo",
                         isPassword: true,
-                        validatorFunction: Validators.requiredPasswordValidationHelper,
+                        validatorFunction:
+                            Validators.requiredPasswordValidationHelper,
                         controller: passController,
                         allowObscureChange: true,
                         isPasswordVisible: isPasswordVisible,
@@ -130,7 +136,8 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                           ),
                           TextButton(
                             onPressed: () {
-                              GoRouter.of(context).push(ForgotPasswordRoute.path);
+                              GoRouter.of(context)
+                                  .push(ForgotPasswordRoute.path);
                             },
                             child: const Text("Pozabljeno geslo?"),
                           ),

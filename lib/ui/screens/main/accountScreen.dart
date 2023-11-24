@@ -9,17 +9,20 @@ class AccountScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<User?> user = ref.watch(authControllerProvider);
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.start, children: [
-      const Text('Account Screen'),
-      const SizedBox(
-        height: 20,
-      ),
-      Text("User: ${user.value?.username ?? 'Error'}"),
-      ElevatedButton(
-          onPressed: () {
-            ref.read(authControllerProvider.notifier).logout();
-          },
-          child: const Text('Logout')),
-    ]);
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const Text('Account Screen'),
+          const SizedBox(
+            height: 20,
+          ),
+          Text("User: ${user.value?.username ?? 'Error'}"),
+          ElevatedButton(
+              onPressed: () {
+                ref.read(authControllerProvider.notifier).logout();
+              },
+              child: const Text('Logout')),
+        ]);
   }
 }

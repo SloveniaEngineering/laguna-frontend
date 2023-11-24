@@ -9,25 +9,14 @@ class HttpService {
   ///
   /// Returns a [Future] of [Response] containing the response data.
   static Future<Response> getRequest({required String endpoint}) async {
-    final Map<String, String> headers = generateHeaders(); // if headers parameter is null, generate default headers
+    final Map<String, String> headers =
+        generateHeaders(); // if headers parameter is null, generate default headers
     Response response = await get(
       Uri.parse(endpoint),
       headers: headers,
     );
     extractAndSaveTokensFromResponse(response);
     return response;
-    /*
-    if (response.statusCode >= 200 && response.statusCode <= 208) {
-      return ResponseWrapper(
-          success: true, statusCode: response.statusCode, responseBody: response.body, bodyBytes: response.bodyBytes);
-    } else {
-      return ResponseWrapper(
-          success: false,
-          statusCode: response.statusCode,
-          errorMessage: response.reasonPhrase,
-          responseBody: response.body);
-    }
-    */
   }
 
   /// Sends a POST request to the specified [endpoint].
@@ -38,9 +27,13 @@ class HttpService {
   ///
   /// Returns a [Future] of [Response] containing the response data.
   static Future<Response> postRequest(
-      {required String endpoint, dynamic body, Map<String, String>? headers}) async {
-    headers ??= generateHeaders(); // if headers parameter is null, generate default headers
-    Response response = await post(Uri.parse(endpoint), body: body, headers: headers);
+      {required String endpoint,
+      dynamic body,
+      Map<String, String>? headers}) async {
+    headers ??=
+        generateHeaders(); // if headers parameter is null, generate default headers
+    Response response =
+        await post(Uri.parse(endpoint), body: body, headers: headers);
     extractAndSaveTokensFromResponse(response);
     return response;
   }
@@ -52,7 +45,8 @@ class HttpService {
     String? accessToken = response.headers["x-access-token"];
     String? refreshToken = response.headers["x-refresh-token"];
     if (accessToken != null && refreshToken != null) {
-      AuthService().saveTokensToStorage(accessToken: accessToken, refreshToken: refreshToken);
+      AuthService().saveTokensToStorage(
+          accessToken: accessToken, refreshToken: refreshToken);
     }
   }
 

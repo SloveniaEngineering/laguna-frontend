@@ -19,7 +19,8 @@ class Controller {
       "username_or_email": username,
       "password": password,
     };
-    Response response = await HttpService.postRequest(endpoint: Constants.loginEndpoint, body: jsonEncode(body));
+    Response response = await HttpService.postRequest(
+        endpoint: Constants.loginEndpoint, body: jsonEncode(body));
 
     if (!ResponseHelper.isSuccess(response)) {
       return (null, response.body);
@@ -39,20 +40,23 @@ class Controller {
   ///
   /// Returns the HTTP status code as an [int].
   /// If an error occurs during the registration process, the corresponding error message will be printed.
-  Future<(AlreadyExists?, String?)> register(String email, String username, String password) async {
+  Future<(AlreadyExists?, String?)> register(
+      String email, String username, String password) async {
     Map<String, String> body = {
       "email": email,
       "username": username,
       "password": password,
     };
 
-    Response response = await HttpService.postRequest(endpoint: Constants.registerEndpoint, body: jsonEncode(body));
+    Response response = await HttpService.postRequest(
+        endpoint: Constants.registerEndpoint, body: jsonEncode(body));
 
     if (response.body.isEmpty) {
       return (null, null);
     }
     try {
-      AlreadyExists alreadyExists = AlreadyExists.fromJson(jsonDecode(response.body));
+      AlreadyExists alreadyExists =
+          AlreadyExists.fromJson(jsonDecode(response.body));
       return (alreadyExists, alreadyExists.message);
     } catch (e, s) {
       print(e);
