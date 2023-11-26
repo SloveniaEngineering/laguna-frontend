@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:laguna/helpers/validators.dart';
 import 'package:laguna/ui/spacing/spacing.dart';
 import 'package:laguna/ui/widgets/credentialTextField.dart';
 import 'package:laguna/ui/widgets/landing_button.dart';
+import 'package:laguna/routing/routes.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
   const ForgotPasswordScreen({super.key});
@@ -15,7 +17,7 @@ class ForgotPasswordScreen extends StatelessWidget {
         child: Stack(children: [
           Positioned.fill(
             child: Image.asset(
-              "assets/images/login-bg-img.png",
+              "../assets/images/login-bg-img.png",
               fit: BoxFit.cover,
             ),
           ),
@@ -34,27 +36,25 @@ class ForgotPasswordScreen extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    SvgPicture.asset("../assets/images/logo.svg"),
                     const Text(
                       "Pozabljeno geslo",
-                      style: TextStyle(fontSize: 30, color: Colors.black),
+                      style: TextStyle(fontSize: 30),
                     ),
                     verticalMargin32,
                     const ForgotPasswordForm(),
                     verticalMargin12,
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const Text(
-                          "Se spomnite geslo?",
-                          style: TextStyle(color: Colors.black54),
-                        ),
                         TextButton(
                           onPressed: () {
-                            GoRouter.of(context).pop();
+                            GoRouter.of(context).go(LoginRoute.path);
+                            // GoRouter.of(context).pop();
                           },
-                          child: const Text("Prijava"),
+                          child: const Text("Vem geslo, nazaj na prijavo"),
                         ),
                       ],
                     ),
@@ -99,11 +99,11 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
                 if (formKey.currentState!.validate()) {
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content:
-                          Text('Email za ponastavitev gesla je bil poslan.')));
+                          Text('Email za ponastavitev gesla je bil uspešno poslan.')));
                   emailController.clear();
                 }
               },
-              text: 'Send email'),
+              text: 'Pošlji email za ponastavitev gesla'),
         ],
       ),
     );

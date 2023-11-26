@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:laguna/dto/alreadyExistsDto/alreadyExistsDto.dart';
 import 'package:laguna/helpers/validators.dart';
@@ -7,6 +8,7 @@ import 'package:laguna/state/authController.dart';
 import 'package:laguna/ui/spacing/spacing.dart';
 import 'package:laguna/ui/widgets/credentialTextField.dart';
 import 'package:laguna/ui/widgets/landing_button.dart';
+import 'package:laguna/routing/routes.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -18,7 +20,7 @@ class RegisterScreen extends StatelessWidget {
       children: [
         Positioned.fill(
           child: Image.asset(
-            "assets/images/login-bg-img.png",
+            "../assets/images/login-bg-img.png",
             fit: BoxFit.cover,
           ),
         ),
@@ -35,26 +37,23 @@ class RegisterScreen extends StatelessWidget {
                 maxWidth: 450,
               ),
               child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Text(
-                    "Laguna Registracija",
-                    style: TextStyle(fontSize: 30, color: Colors.black),
-                  ),
+                  SvgPicture.asset("../assets/images/logo.svg"),
+                  const Text("Registracija novega računa", style: TextStyle(fontSize: 30)),
                   verticalMargin32,
                   const RegisterForm(),
                   verticalMargin12,
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      const Text(
-                        "Že imate račun?",
-                        style: TextStyle(color: Colors.black54),
-                      ),
                       TextButton(
                         onPressed: () {
-                          GoRouter.of(context).pop();
+                          GoRouter.of(context).go(LoginRoute.path);
                         },
-                        child: const Text("Prijava"),
+                        child: const Text("Že imam račun, nazaj na prijavo"),
                       ),
                     ],
                   ),
@@ -181,7 +180,7 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
                         }
                       }
                     },
-                    text: "REGISTER"),
+                    text: "Registriraj me"),
               ],
             ),
           ),
