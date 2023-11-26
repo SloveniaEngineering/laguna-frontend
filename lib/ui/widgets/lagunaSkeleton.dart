@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:laguna/routing/routes.dart';
 import 'package:laguna/state/navigationState.dart';
 
@@ -44,16 +45,6 @@ class LagunaSkeleton extends ConsumerWidget {
           tooltip: HomeRoute.pageName,
         ),
         NavigationDestination(
-          icon: Icon(Icons.search),
-          selectedIcon: Icon(Icons.search),
-          label: 'Search',
-        ),
-        NavigationDestination(
-          icon: Icon(Icons.chat_outlined),
-          selectedIcon: Icon(Icons.chat),
-          label: 'Chat',
-        ),
-        NavigationDestination(
           icon: Icon(CupertinoIcons.person),
           selectedIcon: Icon(Icons.person),
           label: AccountRoute.pageName,
@@ -71,18 +62,13 @@ class LagunaSkeleton extends ConsumerWidget {
       smallBody: (_) => SafeArea(child: child),
 
       // Leading widget to display on the unextended navigation rail (small screens).
-      leadingUnextendedNavRail: Container(
-        color: Colors.blueGrey,
-        width: 50,
-        height: 50,
-        child: const Text("Laguna"),
+      leadingUnextendedNavRail: SizedBox(
+        child: SvgPicture.asset("../assets/images/logo.svg"),
       ),
 
       // Define a default leading widget for the extended navigation rail (medium and large screens).
-      leadingExtendedNavRail: const SizedBox(
-        width: 50,
-        height: 50,
-        child: Icon(Icons.accessible_forward_rounded),
+      leadingExtendedNavRail: SizedBox(
+        child: SvgPicture.asset("../assets/images/logo.svg"),
       ),
 
       // Define a default secondary body content.

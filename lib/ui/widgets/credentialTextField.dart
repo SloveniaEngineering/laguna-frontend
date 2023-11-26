@@ -55,12 +55,7 @@ class _CredentialTextFieldState extends State<CredentialTextField> {
   @override
   Widget build(BuildContext context) {
     // Determine the visibility icon based on the [isPasswordVisible] property.
-    IconData icon;
-    if (widget.isPasswordVisible) {
-      icon = Icons.visibility;
-    } else {
-      icon = Icons.visibility_off;
-    }
+    IconData icon = widget.isPasswordVisible ? Icons.visibility : Icons.visibility_off;
 
     return Container(
       margin: verticalPadding4,

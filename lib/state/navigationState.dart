@@ -29,14 +29,6 @@ class NavigationIndex extends _$NavigationIndex {
         const HomeRoute().go(context);
         break;
       case 1:
-        // Uncomment and specify the route when needed.
-        // const SearchRoute().go(context);
-        break;
-      case 2:
-        // Uncomment and specify the route when needed.
-        // const ChatRoute().go(context);
-        break;
-      case 3:
         // Navigates to the AccountRoute.
         const AccountRoute().go(context);
         break;

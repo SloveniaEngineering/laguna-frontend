@@ -42,7 +42,10 @@ class LoginScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SvgPicture.asset("../assets/images/logo.svg"),
-                      const Text("Prijava", style: TextStyle(fontSize: 30),),
+                      const Text(
+                        "Prijava",
+                        style: TextStyle(fontSize: 30),
+                      ),
                       verticalMargin32,
                       const LoginForm(isWideScreen: true),
                       verticalMargin12,
@@ -51,7 +54,8 @@ class LoginScreen extends StatelessWidget {
                         children: [
                           TextButton(
                             onPressed: () {
-                              GoRouter.of(context).push(ForgotPasswordRoute.path);
+                              GoRouter.of(context)
+                                  .push(ForgotPasswordRoute.path);
                             },
                             child: const Text(
                               "Pozabil sem geslo",
@@ -68,7 +72,8 @@ class LoginScreen extends StatelessWidget {
                             },
                             child: const Text(
                               "Registriraj nov račun",
-                            ),)
+                            ),
+                          )
                         ],
                       ),
                     ],

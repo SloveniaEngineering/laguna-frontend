@@ -42,7 +42,8 @@ class RegisterScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SvgPicture.asset("../assets/images/logo.svg"),
-                  const Text("Registracija novega računa", style: TextStyle(fontSize: 30)),
+                  const Text("Registracija novega računa",
+                      style: TextStyle(fontSize: 30)),
                   verticalMargin32,
                   const RegisterForm(),
                   verticalMargin12,
@@ -85,6 +86,7 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
   bool isPasswordVisible = false;
   bool isConfirmPasswordVisible = false;
   List<String> usernameRecommendations = List.empty();
+  String? confirmPassErrorText;
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +116,7 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
                     // TODO: Make it so that user can tap on recommended username and that auto-fills it into the field.
                     errorText: usernameRecommendations.isEmpty
                         ? null
-                        : "Uporabniško ime že obstaja."
+                        : "Uporabniško ime že obstaja.\n"
                             "Tukaj je nekaj podobnih, med katerimi lahko izbirate: ${usernameRecommendations.join(", ")}",
                     validatorFunction:
                         Validators.requiredUsernameValidationHelper),
@@ -142,9 +144,19 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
                       Validators.requiredPasswordValidationHelper,
                   allowObscureChange: true,
                   isPasswordVisible: isConfirmPasswordVisible,
+                  errorText: confirmPassErrorText,
                   onVisibilityTap: () {
                     setState(() {
                       isConfirmPasswordVisible = !isConfirmPasswordVisible;
+                    });
+                  },
+                  onChanged: (value) {
+                    setState(() {
+                      if (passController.text != value) {
+                        confirmPassErrorText = "Gesli se ne ujemata";
+                      } else {
+                        confirmPassErrorText = null;
+                      }
                     });
                   },
                 ),
@@ -163,20 +175,10 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
                                 username: usernameController.text,
                                 password: passController.text,
                               );
-                          if (alreadyExists != null) {
-                            setState(() {
-                              usernameRecommendations =
-                                  alreadyExists!.recommended_usernames;
-                            });
-                          }
+                          setState(() {
+                            usernameRecommendations = alreadyExists?.recommended_usernames ?? List<String>.empty();
+                          });
                           if (success) GoRouter.of(context).pop();
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                  'Geslo in potrditev gesla se ne ujemata!'),
-                            ),
-                          );
                         }
                       }
                     },

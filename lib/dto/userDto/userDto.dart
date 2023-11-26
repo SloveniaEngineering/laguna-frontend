@@ -9,19 +9,20 @@ part 'userDto.g.dart';
 /// A data transfer object representing a user.
 @freezed
 class User with _$User {
-  const factory User({
-    required String id,
-    required String username,
-    required String first_login,
-    required String? last_login,
-    required String? avatar_url,
-    required String role,
-    required String behaviour,
-    required bool is_enabled,
-    required bool is_donator,
-    required bool has_verified_email,
-    required bool is_profile_private,
-  }) = _User;
+  const factory User(
+      {required String id,
+      required String username,
+      required DateTime first_login,
+      required DateTime? last_login,
+      required String? avatar_url,
+      required String role,
+      required String behaviour,
+      required bool is_enabled,
+      required bool is_donator,
+      required bool has_verified_email,
+      required bool is_profile_private,
+      required String? email_confirm_hash,
+      required DateTime? email_confirm_expiry}) = _User;
 
   /// Create a User instance from a JSON map.
   factory User.fromJson(Map<String, Object?> json) => _$UserFromJson(json);

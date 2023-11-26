@@ -13,7 +13,6 @@ const horizontalMargin24 = SizedBox(width: 24.0);
 const horizontalMargin32 = SizedBox(width: 32.0);
 const horizontalMargin48 = SizedBox(width: 48.0);
 
-
 //vertical
 
 const verticalMargin4 = SizedBox(height: 4.0);
