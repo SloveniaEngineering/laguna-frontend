@@ -47,6 +47,7 @@ dependencies:
   shared_preferences: ^2.2.1
 
   flutter_hooks: ^0.20.1
+  flutter_svg: ^2.0.9
 
 dev_dependencies:
   custom_lint: ^0.5.3
