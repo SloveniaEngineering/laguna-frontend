@@ -98,8 +98,8 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
               onPressed: () {
                 if (formKey.currentState!.validate()) {
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content:
-                          Text('Email za ponastavitev gesla je bil uspešno poslan.')));
+                      content: Text(
+                          'Email za ponastavitev gesla je bil uspešno poslan.')));
                   emailController.clear();
                 }
               },

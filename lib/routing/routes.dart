@@ -5,7 +5,7 @@ import 'package:laguna/ui/screens/landing/forgotPassScreen/forgotPassScreen.dart
 import 'package:laguna/ui/screens/landing/loginScreen/loginScreen.dart';
 import 'package:laguna/ui/screens/landing/registerScreen/registerScreen.dart';
 import 'package:laguna/ui/screens/main/accountScreen.dart';
-import 'package:laguna/ui/screens/main/homeScreen.dart';
+import 'package:laguna/ui/screens/main/dashboardScreen.dart';
 import 'package:laguna/ui/screens/splashScreen.dart';
 import 'package:laguna/ui/widgets/lagunaSkeleton.dart';
 
@@ -89,12 +89,12 @@ class MyShellRouteData extends ShellRouteData {
 @TypedGoRoute<HomeRoute>(path: HomeRoute.path, name: HomeRoute.pageName)
 class HomeRoute extends GoRouteData {
   const HomeRoute();
-  static const pageName = 'Home';
-  static const path = '/home';
+  static const pageName = 'Dashboard';
+  static const path = '/dashboard';
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const HomeScreen();
+    return const DashboardScreen();
   }
 }
 
@@ -103,8 +103,8 @@ class HomeRoute extends GoRouteData {
     path: AccountRoute.path, name: AccountRoute.pageName)
 class AccountRoute extends GoRouteData {
   const AccountRoute();
-  static const pageName = 'My Account';
-  static const path = '/account';
+  static const pageName = 'Moj račun';
+  static const path = '/moj-racun';
 
   @override
   Widget build(BuildContext context, GoRouterState state) {

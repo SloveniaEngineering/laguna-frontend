@@ -11,7 +11,10 @@ class SplashScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text("Loading Laguna...", style: TextStyle(fontSize: 30),),
+            Text(
+              "Loading Laguna...",
+              style: TextStyle(fontSize: 30),
+            ),
             LinearProgressIndicator()
           ],
         ),
