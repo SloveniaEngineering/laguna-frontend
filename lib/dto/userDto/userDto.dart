@@ -1,6 +1,8 @@
 // userDto.dart
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:laguna/dtoEnums/behaviour.dart';
+import 'package:laguna/dtoEnums/role.dart';
 import 'package:laguna/services/authService.dart';
 
 part 'userDto.freezed.dart';
@@ -15,8 +17,8 @@ class User with _$User {
       required DateTime first_login,
       required DateTime? last_login,
       required String? avatar_url,
-      required String role,
-      required String behaviour,
+      required Role role,
+      required Behaviour behaviour,
       required bool is_enabled,
       required bool is_donator,
       required bool has_verified_email,
