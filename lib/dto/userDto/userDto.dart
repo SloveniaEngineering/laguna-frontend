@@ -12,8 +12,8 @@ class User with _$User {
   const factory User({
     required String id,
     required String username,
-    required String first_login,
-    required String? last_login,
+    required DateTime first_login,
+    required DateTime? last_login,
     required String? avatar_url,
     required String role,
     required String behaviour,
@@ -21,6 +21,8 @@ class User with _$User {
     required bool is_donator,
     required bool has_verified_email,
     required bool is_profile_private,
+    required String? email_confirm_hash,
+    required DateTime? email_confirm_expiry
   }) = _User;
 
   /// Create a User instance from a JSON map.

@@ -18,6 +18,13 @@ class AccountScreen extends ConsumerWidget {
             height: 20,
           ),
           Text("User: ${user.value?.username ?? 'Error'}"),
+          Text("Verified email: ${user.value?.has_verified_email ?? 'Error'}"),
+          Text("Email confirm hash: ${user.value?.email_confirm_hash ?? 'Error'}"),
+          Text("Email confirm expiry: ${user.value?.email_confirm_expiry ?? 'Error'}"),
+          Text("Role: ${user.value?.role ?? 'Error'}"),
+          Text("First login: ${user.value?.first_login ?? 'Error'}"),
+          Text("Last login: ${user.value?.last_login ?? 'Error'}"),
+          Text("Behaviour: ${user.value?.behaviour ?? 'Error'}"),
           ElevatedButton(
               onPressed: () {
                 ref.read(authControllerProvider.notifier).logout();
